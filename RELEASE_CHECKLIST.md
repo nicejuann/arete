@@ -144,3 +144,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Historical audit status and alternate reference links; 200 original article records preserved.
 - [x] JavaScript syntax and simulated status/alternate source tests.
 - [ ] Run updated audit self-test and CI; verify physical Android update, actual audio and authentic Bible; independent claim/license review remains outstanding.
+
+## RC26 acceptance
+- [x] RC25 deployment and automated jobs passed.
+- [x] Exact preceding-release upgrade test added, update UX hardened, article records unchanged.
+- [ ] Confirm RC26 upgrade browser test and deployment; test on physical Android and verify authentic media/Bible and claims.

@@ -10,6 +10,7 @@ on:
       - 'index.html'
       - 'scripts/test_release.cjs'
       - 'scripts/test_browser.cjs'
+      - 'scripts/test_upgrade.cjs'
       - 'scripts/audit_links.py'
       - 'scripts/source_inventory.cjs'
       - '.github/workflows/quality.yml'
@@ -37,6 +38,10 @@ jobs:
           python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/arete-server.log 2>&1 &
           for i in $(seq 1 15); do curl -fs http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
           node scripts/test_browser.cjs
+      - name: Upgrade from exact preceding release
+        run: |
+          git fetch --no-tags --depth=1 origin 0607cc35a02f3fc9bdebf4dbbaf0b840d18246b4
+          node scripts/test_upgrade.cjs
   link-audit:
     runs-on: ubuntu-latest
     timeout-minutes: 12
