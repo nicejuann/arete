@@ -54,6 +54,17 @@ assert.match(verse('REV',22,21),/grace.*(Lord|Jesus)/i);
     await page.locator('.bible-verses').waitFor();
     assert.match(await page.locator('.bible-verses').innerText(),/wisdom.*ask.*God/i);
     assert.equal(await page.locator('.bible-reader h3').innerText(),'James 1');
+    await page.locator('#bible-reference').fill('John 3:16');
+    await page.locator('#bible-reference').press('Enter');
+    await page.locator('.bible-verse-selected').waitFor();
+    assert.equal(await page.locator('.bible-reader h3').innerText(),'John 3');
+    assert.equal(await page.locator('.bible-verse-selected sup').innerText(),'16');
+    assert.match(await page.locator('.bible-verse-selected').innerText(),/God.*loved.*world/i);
+    await page.locator('#bible-reference').fill('1 John 4:7-8');
+    await page.locator('[data-act="bible-jump"]').click();
+    await page.waitForFunction(()=>document.querySelectorAll('.bible-verse-selected').length===2);
+    assert.equal(await page.locator('.bible-reader h3').innerText(),'1 John 4');
+    assert.deepEqual(await page.locator('.bible-verse-selected sup').allInnerTexts(),['7','8']);
     await read(65,22,/grace.*(Lord|Jesus)/i);
     assert.ok(await page.locator('[data-act="bible-next"]').isDisabled(),'Last canonical chapter must not advance');
     // Remove the prepared pack, then exercise the real compressed ZIP import while offline.

@@ -1,4 +1,4 @@
-/* ARETE_BUILD:2.0-rc31 */
+/* ARETE_BUILD:2.0-rc32 */
 // Original editorial cards; linked references are further reading, not copied articles.
 const sources={
  memory:['OpenStax · Psychology 2e, §8.4','https://openstax.org/books/psychology-2e/pages/8-4-ways-to-enhance-memory'],

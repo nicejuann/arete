@@ -175,3 +175,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Correct fresh reader default mismatch and add chapter-heading and canonical-boundary assertions.
 - [x] Bound individual chapter network requests and correct source attribution.
 - [ ] Confirm RC31 regression, actual browser upgrade, genuine Bible download/import, deployment and Android acceptance.
+
+## RC32 acceptance
+- [x] Prepared complete Bible pack committed to main.
+- [x] Direct Scripture reference navigation and verse-range highlighting implemented; parser and authentic offline browser assertions added.
+- [ ] Confirm RC32 regression, offline reference jump and exact preceding-release upgrade, deployment, physical Android and independent editorial verification.

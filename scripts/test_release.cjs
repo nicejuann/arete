@@ -61,15 +61,15 @@ const rc23=vm.runInContext("(function(){const p=CONTENT.find(x=>x.id===200);cons
   const makeCache=()=>({entries:new Map(),async put(k,v){this.entries.set(typeof k==='string'?k:k.url,v)},async match(k){return this.entries.get(typeof k==='string'?k:k.url)},async addAll(requests){for(const r of requests)await this.put(r,new Response('fixture'))}});
   const cacheApi={async open(k){if(!stores.has(k))stores.set(k,makeCache());return stores.get(k)},async keys(){return [...stores.keys()]},async delete(k){return stores.delete(k)}};
   const self={registration:{scope},location:{origin:'https://example.test'},clients:{async claim(){claimed++}},async skipWaiting(){skips++},addEventListener(k,fn){handlers[k]=fn}};
-  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc31')+'"':'/* ARETE_BUILD:2.0-rc31 */')};
+  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc32')+'"':'/* ARETE_BUILD:2.0-rc32 */')};
   const swContext=vm.createContext({self,caches:cacheApi,fetch:mockFetch,Request,Response,URL,console});
   vm.runInContext(fs.readFileSync('sw.js','utf8'),swContext);
   function event(name,extra={}){let promise;handlers[name]({...extra,waitUntil:p=>promise=p,respondWith:p=>promise=p});return promise}
-  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc31'));
-  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc31');assert.equal(installed.entries.size,11);
+  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc32'));
+  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc32');assert.equal(installed.entries.size,11);
   const old=await cacheApi.open('arete-v2.0-rc29');await old.put(scope+'app.js?v=2.0-rc29',new Response('old app'));await cacheApi.open('arete-v2.0-rc28');
   await event('activate');assert.equal(claimed,1);assert.ok(stores.has('arete-v2.0-rc29')&&!stores.has('arete-v2.0-rc28'));
-  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc31'));
+  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc32'));
   const cached=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc29',method:'GET',mode:'cors'}});assert.equal(await cached.text(),'old app');
   const missing=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc99',method:'GET',mode:'cors'}});assert.equal(missing.type,'error');assert.equal(network,calls);
   await event('message',{data:{type:'ARETE_ACTIVATE_UPDATE'}});assert.equal(skips,1);
@@ -85,3 +85,5 @@ const rc28=vm.runInContext("(function(){const text=PACK_CODES.flatMap((c,i)=>Arr
 const rc29=vm.runInContext("(function(){const disabled=state.disabled.slice();state.disabled=[...new Set([...disabled,'Faith'])];const hint=bibleView().includes('bible-preferences')&&!bibleView().includes('bible-open');state.disabled=state.disabled.filter(c=>c!=='Faith');bibleOpen=false;const enabled=bibleView().includes('bible-open');state.disabled=disabled;return {hint,enabled,preserved:JSON.stringify(state.disabled)===JSON.stringify(disabled)}})()",context);assert.ok(Object.values(rc29).every(Boolean));console.log(JSON.stringify(rc29));
 
 const rc30=vm.runInContext("(function(){const p={body:'One short sentence. Another short sentence follows. A final sentence.'};const chunks=narrationChunks(p,40);const complete=chunks.join(' ')===p.body;const sentence=chunks.every(c=>/[.!?]$/.test(c));const bounded=CONTENT.every(p=>narrationChunks(p).every(c=>c.length<=220)&&narrationChunks(p).join(' ') === [p.title,p.summary,p.body,p.extra].filter(Boolean).join(' ').trim().replace(/\\s+/g,' '));return {complete,sentence,bounded}})()",context);assert.ok(Object.values(rc30).every(Boolean));console.log(JSON.stringify(rc30));
+
+const rc32=vm.runInContext("(function(){const examples=['John 3:16','Psalm 23','1 John 4:7-8','JAS 1:5','Song of Songs 2:1','REV 22:21','2 Timothy 3:16'];const expected=[[42,3,16,16],[18,23,null,null],[61,4,7,8],[58,1,5,5],[21,2,1,1],[65,22,21,21],[54,3,16,16]];const pass=examples.every((s,i)=>{const p=parseBibleReference(s);return p&&JSON.stringify([p.book,p.chapter,p.first,p.last])===JSON.stringify(expected[i])});const rejected=['John 0','John 22','John 3:0','John 3:17-16','John 3:177','Unknown 1','John','John 3:16 garbage','constructor 1'].every(s=>parseBibleReference(s)===null);const all=BIBLE_BOOKS.every(([name,n],i)=>parseBibleReference(name+' '+n)?.book===i&&parseBibleReference(name+' '+(n+1))===null);return {pass,rejected,all}})()",context);assert.ok(rc32.pass&&rc32.rejected&&rc32.all,JSON.stringify(rc32));console.log(JSON.stringify(rc32));
