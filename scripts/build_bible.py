@@ -1,5 +1,5 @@
 """Build a validated Protestant WEB offline pack from the official eBible VPL archive."""
-import hashlib,io,json,pathlib,re,urllib.request,urllib.parse,zipfile
+import hashlib,io,json,pathlib,re,urllib.request,urllib.parse,zipfile,time,sys
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 SOURCE="https://ebible.org/Scriptures/engwebp_vpl.zip"
 CODES="GEN EXO LEV NUM DEU JOS JDG RUT 1SA 2SA 1KI 2KI 1CH 2CH EZR NEH EST JOB PSA PRO ECC SNG ISA JER LAM EZK DAN HOS JOL AMO OBA JON MIC NAM HAB ZEP HAG ZEC MAL MAT MRK LUK JHN ACT ROM 1CO 2CO GAL EPH PHP COL 1TH 2TH 1TI 2TI TIT PHM HEB JAS 1PE 2PE 1JN 2JN 3JN JUD REV".split()
@@ -16,7 +16,9 @@ def build(raw):
         text=z.read(names[0]).decode("utf-8-sig")
     for line in text.splitlines():
         m=re.match(r"^\s*([1-3]?[A-Za-z]+)\s+(\d+):(\d+)\s+(.+)$",line)
-        if not m: continue
+        if not m:
+            if re.match(r"^\s*\S+\s+\d+:\d+",line): raise ValueError("Malformed verse reference")
+            continue
         name,ch,verse,value=m.groups()
         code=ALIASES.get(name.upper())
         if code is None: raise ValueError("Unknown book code "+name)
@@ -33,11 +35,28 @@ def build(raw):
     return {"edition":"engwebp","source":SOURCE,"sourceSha256":hashlib.sha256(raw).hexdigest(),"verseCount":count,"books":ordered}
 def main():
     req=urllib.request.Request(SOURCE,headers={"User-Agent":"ARETE/1.2 (https://github.com/nicejuann/arete)"})
-    with urllib.request.urlopen(req,timeout=60) as r:
-        if urllib.parse.urlsplit(r.geturl()).hostname not in {"ebible.org","www.ebible.org"}: raise ValueError("Unexpected source")
-        raw=r.read(15000001)
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req,timeout=60) as r:
+                if urllib.parse.urlsplit(r.geturl()).hostname not in {"ebible.org","www.ebible.org"}: raise ValueError("Unexpected source")
+                raw=r.read(15000001)
+            break
+        except (OSError,TimeoutError) as exc:
+            print("Download attempt",attempt+1,"failed:",str(exc),flush=True)
+            if attempt==2: raise
+            time.sleep(5*(attempt+1))
     if len(raw)>15000000: raise ValueError("Archive too large")
     pack=build(raw)
     (ROOT/"bible-webp.json").write_text(json.dumps(pack,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
     print("Validated 66 books, 1189 chapters,",pack["verseCount"],"verses")
-if __name__=="__main__": main()
+def self_test():
+    assert len(CODES)==66 and sum(COUNTS)==1189
+    b=io.BytesIO()
+    with zipfile.ZipFile(b,"w") as z: z.writestr("engwebp_vpl.txt","GEN 1:1 Test\n")
+    try: build(b.getvalue())
+    except ValueError: pass
+    else: raise AssertionError("Incomplete pack accepted")
+    print("Bible parser fixture: incomplete pack rejected")
+if __name__=="__main__":
+    if "--self-test" in sys.argv: self_test()
+    else: main()
