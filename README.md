@@ -122,3 +122,6 @@ Ten additional existing articles revised (IDs 63, 64, 68, 73, 75, 79, 82, 96, 12
 
 ## v2.0 RC9 — sixth editorial depth pass
 Ten further existing articles revised (IDs 66, 67, 71, 72, 110, 115, 117, 119, 141, 143); 60 of 176 now have dated source-aligned revision records. Batch mean 106 to 247 words; under-120-word articles 73 to 63. All nine distinct reference pages for these ten articles were retrieved directly; a different LOC teachers guide returned HTTP 403 and its article was deferred. Existing IDs, titles, quizzes and unrelated records preserved. Editorial revision is not independent peer review. Actual media delivery, CI, Android and authentic Bible import remain unverified. No new paid services.
+
+## v2.0 RC10 — seventh editorial depth pass
+Ten existing articles revised (IDs 13, 22, 25, 26, 27, 28, 42, 45, 46, 49); 70 of 176 have dated source-aligned revision records. Batch mean 107 to 245 words; under-120-word articles 63 to 53. Eight distinct reference pages were successfully retrieved, and three general Scripture links now open relevant Bible chapters directly. Existing IDs, titles, quizzes and unrelated content preserved. Prior deferred LOC article remains outstanding. Independent review, CI, live deployment, media delivery, Android and authentic Bible import remain unverified. No new paid services.
