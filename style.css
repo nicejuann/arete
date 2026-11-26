@@ -60,3 +60,6 @@ body.light{--bg:#f4f1e9;--surface:#fffdf9;--surface2:#f1eee5;--text:#202b25;--mu
 
 /* RC13: discreet source-review metadata */
 .editorial-review-label{color:var(--muted);font-size:11px!important;line-height:1.4;margin:6px 0 12px;overflow-wrap:anywhere}
+
+/* RC14: readable paragraph rhythm on narrow screens */
+.editorial .article-body p{margin:0 0 1em;line-height:1.78;overflow-wrap:break-word}.editorial .article-body p:last-child{margin-bottom:0}.focused-reading .editorial .article-body p{line-height:1.85}.editorial .article-body{max-width:70ch;margin-inline:auto}
