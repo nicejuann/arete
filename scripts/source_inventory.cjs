@@ -25,7 +25,8 @@ function buildInventory(){
   for(const m of fs.readFileSync('app.js','utf8').matchAll(/https:\/\/[^\s"'<>\\]+/g)){
     const url=m[0].replace(/[),;\]]+$/,'');
     if(/[$\{\}]/.test(url)||/\/$/.test(url)&&/bible-api\.com|cdn\.jsdelivr\.net/.test(url))continue;
-    if(!sources.has(url))add(url,'app resource','','');
+    if(/\.(mp3|ogg|m4a)(?:\?|$)/i.test(url))add(url,'audio file','','');
+    else if(!sources.has(url))add(url,'app resource','','');
   }
   const records=[...sources.values()].sort((a,b)=>a.url.localeCompare(b.url));
   const review=originals.map(p=>({id:p.id,category:p.category,title:p.title,words:[p.summary,p.body,p.extra].filter(Boolean).join(' ').trim().split(/\s+/).length,source:p.source,url:p.url,hasQuiz:!!p.quiz,hasPhoto:!!p.photo,review:p.editorialReview?.status||'not reviewed',reviewDate:p.editorialReview?.date||'',reviewScope:p.editorialReview?.scope||''}));

@@ -138,3 +138,9 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Matching release markers and worker version checks, cached navigation, previous cache retention, explicit activation.
 - [x] Mocked install failure/activation/shell coherence; 200 articles and 72 quizzes unchanged.
 - [ ] Confirm RC24 CI and live RC23→RC24 upgrade on physical Android. External audio, authentic Bible and independent content review remain open.
+
+## RC25 acceptance
+- [x] RC24 actual artifact inspected; previous deployment and three quality jobs passed.
+- [x] Historical audit status and alternate reference links; 200 original article records preserved.
+- [x] JavaScript syntax and simulated status/alternate source tests.
+- [ ] Run updated audit self-test and CI; verify physical Android update, actual audio and authentic Bible; independent claim/license review remains outstanding.
