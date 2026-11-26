@@ -133,6 +133,8 @@ function zipStored(entries){
     await page.locator('[data-tab="discover"]').click();
     await page.evaluate(async()=>{await navigator.serviceWorker.ready});
     await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+    assert.ok(await page.evaluate(async()=>{const cache=await caches.open('arete-v2.0-rc24');const html=await cache.match(new URL('index.html',location.href));return html&&(await html.text()).includes('data-build="2.0-rc24"')}));
+    assert.equal(await page.locator('#app-update').isVisible(),false);
     await context.setOffline(true);
     await page.reload({waitUntil:'domcontentloaded'});
     await page.locator('.discovery-hub').waitFor();

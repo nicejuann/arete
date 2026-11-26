@@ -1,9 +1,9 @@
-# ARETÉ v2.0 RC23 acceptance checklist
+# ARETÉ v2.0 RC24 acceptance checklist
 
 This is a release candidate, not a claim of production readiness.
 
 ## Android / installed app
-- [ ] Open app and verify version 2.0-rc23.
+- [ ] Open app and verify version 2.0-rc24.
 - [ ] Read and save an article, add a note, mark it read, close and reopen.
 - [ ] Change favorites, theme, text size and feed layout; restart and confirm persistence.
 - [ ] Search by topic and accented name, open a result and return.
@@ -133,3 +133,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] 200 originals and 72 quizzes; previous content preserved.
 - [x] Local quiz answer persistence, explicit retry and validated optional backup field.
 - [ ] Verify CI, deployment, physical Android acceptance and independent factual review.
+
+## RC24 acceptance
+- [x] Matching release markers and worker version checks, cached navigation, previous cache retention, explicit activation.
+- [x] Mocked install failure/activation/shell coherence; 200 articles and 72 quizzes unchanged.
+- [ ] Confirm RC24 CI and live RC23→RC24 upgrade on physical Android. External audio, authentic Bible and independent content review remain open.

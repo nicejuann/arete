@@ -54,3 +54,24 @@ const rc21=vm.runInContext("(function(){const current=CONTENT.filter(p=>p.id>=19
 const rc22=vm.runInContext("(function(){const g=GUIDE_LIST.find(x=>x.id==='family'),items=guidePosts(g),first=guideNext(g);const old=state.read.slice();state.read.push(first.id);const resumed=guideNext(g)?.id!==first.id;state.read=[...new Set([...state.read,...items.map(p=>p.id)])];const finished=guideNext(g)===null;state.read=old;activeGuide=g.id;guideArticle=null;const ui=guideView().includes('guide-resume');return {count:GUIDE_LIST.length,valid:GUIDE_LIST.every(g=>new Set(g.ids).size===g.ids.length&&g.ids.every(id=>CONTENT.some(p=>p.id===id))),resumed,finished,ui}})()",context);assert.equal(rc22.count,8);assert.ok(rc22.valid&&rc22.resumed&&rc22.finished&&rc22.ui);console.log(JSON.stringify(rc22));
 
 const rc23=vm.runInContext("(function(){const p=CONTENT.find(x=>x.id===200);const stored=rememberQuiz(p,0);const checked=quiz(p).includes('Correct.')&&quiz(p).includes('quiz-retry');const saved=JSON.parse(localStorage.getItem('arete-quiz-answers'))[p.id]===0;const backup=JSON.parse(prepareRestore(createBackup()).get('arete-quiz-answers'))[p.id]===0;const invalid=!rememberQuiz(p,9)&&!Object.keys(cleanQuizAnswers({'200':9,'999':0})).length;resetQuiz(p);const reset=quizAnswers[p.id]===undefined&&!quiz(p).includes('quiz-retry');return {stored,checked,saved,backup,invalid,reset}})()",context);assert.ok(Object.values(rc23).every(Boolean));console.log(JSON.stringify(rc23));
+
+// Version-matched service worker checks without real network or browser state.
+(async()=>{
+  const handlers={},stores=new Map(),scope='https://example.test/arete/';let network=0,wrong=false,skips=0,claimed=0;
+  const makeCache=()=>({entries:new Map(),async put(k,v){this.entries.set(typeof k==='string'?k:k.url,v)},async match(k){return this.entries.get(typeof k==='string'?k:k.url)},async addAll(requests){for(const r of requests)await this.put(r,new Response('fixture'))}});
+  const cacheApi={async open(k){if(!stores.has(k))stores.set(k,makeCache());return stores.get(k)},async keys(){return [...stores.keys()]},async delete(k){return stores.delete(k)}};
+  const self={registration:{scope},location:{origin:'https://example.test'},clients:{async claim(){claimed++}},async skipWaiting(){skips++},addEventListener(k,fn){handlers[k]=fn}};
+  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc24')+'"':'/* ARETE_BUILD:2.0-rc24 */')};
+  const swContext=vm.createContext({self,caches:cacheApi,fetch:mockFetch,Request,Response,URL,console});
+  vm.runInContext(fs.readFileSync('sw.js','utf8'),swContext);
+  function event(name,extra={}){let promise;handlers[name]({...extra,waitUntil:p=>promise=p,respondWith:p=>promise=p});return promise}
+  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc24'));
+  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc24');assert.equal(installed.entries.size,11);
+  const old=await cacheApi.open('arete-v2.0-rc23');await old.put(scope+'app.js?v=2.0-rc23',new Response('old app'));await cacheApi.open('arete-v2.0-rc22');
+  await event('activate');assert.equal(claimed,1);assert.ok(stores.has('arete-v2.0-rc23')&&!stores.has('arete-v2.0-rc22'));
+  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc24'));
+  const cached=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc23',method:'GET',mode:'cors'}});assert.equal(await cached.text(),'old app');
+  const missing=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc99',method:'GET',mode:'cors'}});assert.equal(missing.type,'error');assert.equal(network,calls);
+  await event('message',{data:{type:'ARETE_ACTIVATE_UPDATE'}});assert.equal(skips,1);
+  console.log('RC24 worker: rejected mismatched build, retained prior cache, served matched offline shell, blocked mixed-version network fallback, explicit activation');
+})().catch(e=>{console.error(e);process.exitCode=1});
