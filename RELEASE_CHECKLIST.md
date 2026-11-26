@@ -185,3 +185,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Add accessible narration segment navigation and progress indicator.
 - [x] Test paused seeking, stale callback protection, progress and boundary behavior with mocked speech.
 - [ ] Verify actual Chromium interaction and narrow screen layout, release upgrade and deployment, Android and real audio quality.
+
+## RC34 acceptance
+- [x] Implement per-article local narration progress, restart and completion clearing.
+- [x] Add content-version guards and backup integration; add simulated resume tests.
+- [ ] Confirm Chromium reload/resume, narrow dock layout, CI upgrade, deployment, physical Android and actual audio quality.

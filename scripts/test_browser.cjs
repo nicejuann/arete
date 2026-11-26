@@ -66,6 +66,8 @@ function zipStored(entries){
     assert.ok(await page.evaluate(()=>{const r=document.querySelector('#narration-dock').getBoundingClientRect();return r.left>=0&&r.right<=innerWidth}));
     await page.setViewportSize({width:393,height:873});
     await dock.locator('[data-act="narration-toggle"]').click();
+    await dock.locator('[data-act="narration-next"]').click();
+    const resumeText=await page.evaluate(()=>window.__areteSpoken.at(-1));
     await first.locator('[data-act="save"]').click();
     await page.locator('#nav [data-tab="saved"]').click();
     await page.locator('#narration-dock [data-act="narration-stop"]').click();
@@ -73,6 +75,14 @@ function zipStored(entries){
     assert.equal(await page.locator('#'+id).count(),1);
     await page.reload();
     await page.locator('#'+id).waitFor();
+    const resumeButton=page.locator('#'+id+' [data-act="listen"]');
+    assert.match(await resumeButton.innerText(),/Resume audio/);
+    await resumeButton.click();
+    assert.equal(await page.locator('#narration-dock progress').getAttribute('value'),'1');
+    assert.equal(await page.evaluate(()=>window.__areteSpoken.at(-1)),resumeText);
+    await page.locator('#narration-dock [data-act="narration-restart"]').click();
+    assert.equal(await page.locator('#narration-dock progress').getAttribute('value'),'0');
+    await page.locator('#narration-dock [data-act="narration-stop"]').click();
     await page.locator('[data-tab="discover"]').click();
     await page.locator('[data-act="focus"][data-focus="original"]').click();
     await page.locator('[data-act="unread"]').click();

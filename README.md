@@ -194,3 +194,6 @@ The validated offline WEB Protestant pack was published in commit 4a8ba36e98a2e9
 
 ## v2.0 RC33 — narration segment navigation
 RC33 adds previous/next narration segment controls, a completed-segment progress indicator and responsive controls for 320px screens. Seeking while paused does not resume speech; seeking during playback cancels the previous utterance and ignores stale callbacks. First and final segments are bounded. Added mocked speech regression and real Chromium interaction assertions, including narrow layout. Existing article data and storage keys are unchanged. Actual device voices, browser CI, deployment and Android testing remain unverified.
+
+## v2.0 RC34 — resume interrupted narration
+RC34 saves the current narration segment per article on-device, offers Resume audio on article cards, adds a Restart control, and clears progress on natural completion. Content fingerprints prevent stale positions after article revisions. Positions are included in optional backup/restore; stale positions are discarded on restore. No autoplay, network service or change to existing article content. Added mocked speech regression and browser reload/resume assertions. Actual speech and mobile layout acceptance remain pending.
