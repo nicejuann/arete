@@ -80,3 +80,6 @@ Added 12 original stories with six new quizzes on geology, ocean physics, astron
 
 ## v1.5 — retention and visual explanations
 Added optional saved-original review sessions of up to five items, answer reveal, local self-rated review intervals (1, 3, 7, 14 and 30 days), scheduling persistence and backup. No notifications, streaks or compulsory study. Six original inline SVG conceptual diagrams for existing articles on earthquake shaking, sound refraction, pressure, gravitational lensing, purchasing power and compounding. All work without remote media, after app installation. Original article and quiz counts unchanged. Complete Bible pack still absent at preparation, Android playback and external sources not verified. No paid services added.
+
+## v1.6 — connected knowledge
+Eight new independently written stories on water, atmospheric optics, ocean ecosystems, memory and economics. Five guided reading paths in Explore connect new and existing posts in deliberate sequences; progress uses existing marked-read IDs, with no new tracking. Four additional offline SVG explanations and two publisher educational video links (external playback untested). Existing v1.5 spaced recall and six diagrams preserved. Complete Bible pack publication and real-device testing remain unconfirmed. No paid services added.
