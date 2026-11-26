@@ -32,3 +32,6 @@ All 50 starter articles expanded with original examples; full content visible di
 
 ## v0.2.1 update delivery
 Visible version label, versioned static assets, navigation network-first with offline fallback, service-worker update checks on foreground. No storage schema changes. Android update and deployment verification pending.
+
+## v0.3
+60 stable-ID articles including ten new discoveries, credited remote images, one in-feed NASA video, three interactive quizzes and an optional publisher headline digest. Remote media requires internet and may fail to load; credit and source links remain. Fresh headlines are publisher links, not editorially approved new articles. No paid APIs, trackers or autoplay. Existing local data retained. Android and remote asset rendering require retesting.
