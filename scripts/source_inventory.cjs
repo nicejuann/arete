@@ -28,12 +28,12 @@ function buildInventory(){
     if(!sources.has(url))add(url,'app resource','','');
   }
   const records=[...sources.values()].sort((a,b)=>a.url.localeCompare(b.url));
-  const review=originals.map(p=>({id:p.id,category:p.category,title:p.title,words:[p.summary,p.body,p.extra].filter(Boolean).join(' ').trim().split(/\s+/).length,source:p.source,url:p.url,hasQuiz:!!p.quiz,hasPhoto:!!p.photo,review:'not reviewed'}));
+  const review=originals.map(p=>({id:p.id,category:p.category,title:p.title,words:[p.summary,p.body,p.extra].filter(Boolean).join(' ').trim().split(/\s+/).length,source:p.source,url:p.url,hasQuiz:!!p.quiz,hasPhoto:!!p.photo,review:p.editorialReview?.status||'not reviewed',reviewDate:p.editorialReview?.date||'',reviewScope:p.editorialReview?.scope||''}));
   const csv=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
-  const columns=['id','category','title','words','source','url','hasQuiz','hasPhoto','review'];
+  const columns=['id','category','title','words','source','url','hasQuiz','hasPhoto','review','reviewDate','reviewScope'];
   fs.writeFileSync('source-inventory.json',JSON.stringify({originals:review.length,links:records},null,2)+'\n');
   fs.writeFileSync('editorial-review.csv',[columns.join(','),...review.map(p=>columns.map(k=>csv(p[k])).join(','))].join('\n')+'\n');
-  console.log(JSON.stringify({originals:review.length,uniqueLinks:records.length,under120Words:review.filter(p=>p.words<120).length,reviewed:0}));
+  console.log(JSON.stringify({originals:review.length,uniqueLinks:records.length,under120Words:review.filter(p=>p.words<120).length,sourceAligned:review.filter(p=>p.review==='source-aligned revision').length}));
   return {review,records};
 }
 buildInventory();
