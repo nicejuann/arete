@@ -61,16 +61,16 @@ const rc23=vm.runInContext("(function(){const p=CONTENT.find(x=>x.id===200);cons
   const makeCache=()=>({entries:new Map(),async put(k,v){this.entries.set(typeof k==='string'?k:k.url,v)},async match(k){return this.entries.get(typeof k==='string'?k:k.url)},async addAll(requests){for(const r of requests)await this.put(r,new Response('fixture'))}});
   const cacheApi={async open(k){if(!stores.has(k))stores.set(k,makeCache());return stores.get(k)},async keys(){return [...stores.keys()]},async delete(k){return stores.delete(k)}};
   const self={registration:{scope},location:{origin:'https://example.test'},clients:{async claim(){claimed++}},async skipWaiting(){skips++},addEventListener(k,fn){handlers[k]=fn}};
-  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc28')+'"':'/* ARETE_BUILD:2.0-rc28 */')};
+  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc29')+'"':'/* ARETE_BUILD:2.0-rc29 */')};
   const swContext=vm.createContext({self,caches:cacheApi,fetch:mockFetch,Request,Response,URL,console});
   vm.runInContext(fs.readFileSync('sw.js','utf8'),swContext);
   function event(name,extra={}){let promise;handlers[name]({...extra,waitUntil:p=>promise=p,respondWith:p=>promise=p});return promise}
-  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc28'));
-  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc28');assert.equal(installed.entries.size,11);
-  const old=await cacheApi.open('arete-v2.0-rc27');await old.put(scope+'app.js?v=2.0-rc27',new Response('old app'));await cacheApi.open('arete-v2.0-rc26');
-  await event('activate');assert.equal(claimed,1);assert.ok(stores.has('arete-v2.0-rc27')&&!stores.has('arete-v2.0-rc26'));
-  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc28'));
-  const cached=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc27',method:'GET',mode:'cors'}});assert.equal(await cached.text(),'old app');
+  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc29'));
+  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc29');assert.equal(installed.entries.size,11);
+  const old=await cacheApi.open('arete-v2.0-rc28');await old.put(scope+'app.js?v=2.0-rc28',new Response('old app'));await cacheApi.open('arete-v2.0-rc27');
+  await event('activate');assert.equal(claimed,1);assert.ok(stores.has('arete-v2.0-rc28')&&!stores.has('arete-v2.0-rc27'));
+  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc29'));
+  const cached=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc28',method:'GET',mode:'cors'}});assert.equal(await cached.text(),'old app');
   const missing=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc99',method:'GET',mode:'cors'}});assert.equal(missing.type,'error');assert.equal(network,calls);
   await event('message',{data:{type:'ARETE_ACTIVATE_UPDATE'}});assert.equal(skips,1);
   console.log('RC24 worker: rejected mismatched build, retained prior cache, served matched offline shell, blocked mixed-version network fallback, explicit activation');
@@ -81,3 +81,5 @@ const rc25=vm.runInContext("(function(){const p=CONTENT.find(x=>x.id===77),q=CON
 const rc27=vm.runInContext("(function(){const lines=PACK_CODES.flatMap((c,i)=>Array.from({length:BIBLE_BOOKS[i][1]},(_,j)=>Array.from({length:27},(_,v)=>c+' '+(j+1)+':'+(v+1)+' Synthetic fixture').join('\\n')).join('\\n')).join('\\n');const pack=parseBibleVpl(lines+'\\nMAT 17:28\\n');let duplicate=false,malformed=false;try{parseBibleVpl(lines+'\\nMAT 17:1\\n')}catch(e){duplicate=/Duplicate/.test(e.message)}try{parseBibleVpl(lines+'\\nMAT 17:28-29 Unexpected')}catch(e){malformed=/Malformed/.test(e.message)}return {books:pack.books.length,chapters:pack.books.reduce((n,b)=>n+b.chapters.length,0),count:pack.verseCount,empty:pack.emptyReferences.length===1&&pack.emptyReferences[0].verse===28,valid:validPack(pack),duplicate,malformed,rejectConflict:!validPack({...pack,emptyReferences:[{code:'MAT',chapter:17,verse:1}]}),legacy:validPack({...pack,emptyReferences:undefined})}})()",context);assert.equal(rc27.books,66);assert.equal(rc27.chapters,1189);assert.equal(rc27.count,32103);assert.ok(rc27.empty&&rc27.valid&&rc27.duplicate&&rc27.malformed&&rc27.rejectConflict&&rc27.legacy);console.log(JSON.stringify(rc27));
 
 const rc28=vm.runInContext("(function(){const text=PACK_CODES.flatMap((c,i)=>Array.from({length:BIBLE_BOOKS[i][1]},(_,j)=>Array.from({length:27},(_,v)=>(c==='JAS'?'JAM':c)+' '+(j+1)+':'+(v+1)+' Synthetic fixture').join('\\n')).join('\\n')).join('\\n');const p=parseBibleVpl(text);return {books:p.books.length,chapters:p.books.reduce((n,b)=>n+b.chapters.length,0),count:p.verseCount,james:p.books[58].code==='JAS'&&p.books[58].chapters[0][0].text==='Synthetic fixture',valid:validPack(p)}})()",context);assert.equal(rc28.books,66);assert.equal(rc28.chapters,1189);assert.equal(rc28.count,32103);assert.ok(rc28.james&&rc28.valid);console.log(JSON.stringify(rc28));
+
+const rc29=vm.runInContext("(function(){const disabled=state.disabled.slice();state.disabled=[...new Set([...disabled,'Faith'])];const hint=bibleView().includes('bible-preferences')&&!bibleView().includes('bible-open');state.disabled=state.disabled.filter(c=>c!=='Faith');bibleOpen=false;const enabled=bibleView().includes('bible-open');state.disabled=disabled;return {hint,enabled,preserved:JSON.stringify(state.disabled)===JSON.stringify(disabled)}})()",context);assert.ok(Object.values(rc29).every(Boolean));console.log(JSON.stringify(rc29));

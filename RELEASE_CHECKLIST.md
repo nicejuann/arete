@@ -159,3 +159,9 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] RC27 release and cross-version checks passed; Bible build log isolated JAM alias failure.
 - [x] Explicit JAM alias, unknown-code preflight and synthetic JavaScript regression.
 - [ ] Official-source build, authentic Chromium download/import and publishing; verify real Android and remaining content/media.
+
+## RC29 acceptance
+- [x] RC28 genuine archive structurally validated; source fingerprint recorded.
+- [x] RC28 release quality and deployment passed.
+- [x] Corrected Faith test setup and added optional Library preferences shortcut.
+- [ ] Confirm authentic Chromium download, offline reading, ZIP import and publication; physical Android acceptance.
