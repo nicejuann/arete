@@ -1,9 +1,9 @@
-# ARETÉ v2.0 RC20 acceptance checklist
+# ARETÉ v2.0 RC21 acceptance checklist
 
 This is a release candidate, not a claim of production readiness.
 
 ## Android / installed app
-- [ ] Open app and verify version 2.0-rc20.
+- [ ] Open app and verify version 2.0-rc21.
 - [ ] Read and save an article, add a note, mark it read, close and reopen.
 - [ ] Change favorites, theme, text size and feed layout; restart and confirm persistence.
 - [ ] Search by topic and accented name, open a result and return.
@@ -118,3 +118,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Eight catalog-linked human recordings; on-demand player and source fallback.
 - [x] Local book section selection, search and continuation; old pagination preserved.
 - [ ] Verify RC20 CI and actual audio streaming, physical Android and authentic Bible import.
+
+## RC21 acceptance
+- [x] Eight new source-aligned original articles and quizzes, 184 originals / 56 quizzes; prior articles preserved.
+- [x] New collection and connection-status checks in simulation.
+- [ ] Confirm RC21 browser offline test and deployment; verify actual device behavior and independently review all content.
