@@ -1,0 +1,10 @@
+const fs=require('node:fs');const vm=require('node:vm');const assert=require('node:assert/strict');
+const content=fs.readFileSync('content.js','utf8'),app=fs.readFileSync('app.js','utf8');
+for(const f of ['app.js','content.js','sw.js'])new vm.Script(fs.readFileSync(f,'utf8'),{filename:f});
+const fixture={saved:[1],read:[2],hidden:[],weights:{},disabled:['Faith'],theme:'dark',notes:{'1':'fixture'},seen:[],opens:2};
+const data=new Map([['arete-v1',JSON.stringify(fixture)],['arete-web',fs.readFileSync('fresh.json','utf8')],['arete-open-reading',fs.readFileSync('open-reading.json','utf8')],['arete-gallery',fs.readFileSync('gallery.json','utf8')]]);
+const elements={};const document={querySelector:s=>elements[s]??(elements[s]={innerHTML:'',style:{},textContent:'',click(){}}),body:{classList:{toggle(){}}},addEventListener(){},getElementById(){return null}};
+const window={scrollY:0,scrollTo(){},addEventListener(){}};
+const context=vm.createContext({document,window,URL,localStorage:{getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v)},navigator:{onLine:false},location:{hash:'',protocol:'file:'},fetch:async()=>({ok:false}),console,setTimeout,clearTimeout});
+const result=vm.runInContext(content+'\n'+app+'\n'+"({count:CONTENT.length,unique:new Set(CONTENT.map(p=>p.id)).size,oldSave:state.saved.includes(1)&&state.notes[1]==='fixture',hub:$('#main').innerHTML.includes('discovery-hub'),quiz:(focusView='quiz',makeQueue(),queue.every(p=>p.quiz)&&queue.length>0),unread:(focusView='original',unreadOnly=true,makeQueue(),queue.every(p=>!state.read.includes(p.id))),search:(search='moon',searchDetail=null,unifiedSearch().includes('matching results')),open:openItems.filter(validOpen).length,headlines:webItems.filter(trustedWebItem).length,library:(tab='library',render(),$('#main').innerHTML.includes('Listen & learn'))})",context);
+assert.equal(result.count,result.unique);assert.ok(result.count>=118);for(const k of ['oldSave','hub','quiz','unread','search','library'])assert.ok(result[k],k);assert.ok(result.open>0);assert.ok(result.headlines>0);console.log(JSON.stringify(result));

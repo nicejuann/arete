@@ -56,3 +56,6 @@ Daily curated-topic Wikipedia lead-excerpt collection via standard-library Pytho
 
 ## v0.9 — visual discovery and human narration
 Prior automated text import verified: 11 open-license excerpts and 42 headlines. Added a third workflow for up to six public-domain Met artwork records per day, 120-record cap, with CC0 metadata and credit. Images are streamed from the museum. Five LibriVox catalog links, one on-demand audio player sourced from the catalog, four NASA video links, and an Astronomy 2e textbook link. No autoplay or paid services. Audio playback, Android image rendering and first gallery run still need verification. Original article count unchanged.
+
+## v1.0 RC1 — release candidate
+Focused collection navigation, unread-only toggle, unified search across four collections with compact results and full article/excerpt reading, larger text option, and editorial typography. Automated Node regression checks and a weekly/push link audit report unreachable and unverified sources separately without deleting links. Link audit output is an Actions artifact. Existing article IDs and local data keys preserved. Gallery first import remains pending as of preparation; live Android/PWA, media and full source audit remain unverified. Release candidate, not production completion. No paid services added.
