@@ -134,7 +134,7 @@ function zipStored(entries){
     await page.locator('.discovery-hub').waitFor();
     assert.equal(await page.locator('#connection-status').innerText(),'Offline');
     await page.locator('[data-act="focus"][data-focus="new"]').click();
-    assert.ok(await page.locator('#post-184').count()>0);
+    assert.ok(await page.locator('#post-190').count()>0);
     await page.locator('[data-act="focus"][data-focus="original"]').click();
     await page.locator('article.editorial').first().waitFor();
     await page.locator('[data-tab="library"]').click();
