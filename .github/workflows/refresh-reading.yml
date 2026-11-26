@@ -1,0 +1,35 @@
+name: Refresh open educational reading
+on:
+  schedule:
+    - cron: '47 0 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh_reading.py'
+      - 'scripts/reading-topics.json'
+      - '.github/workflows/refresh-reading.yml'
+permissions:
+  contents: write
+concurrency:
+  group: arete-content-publish
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate excerpt processing
+        run: python3 scripts/refresh_reading.py --test
+      - name: Collect attributed open-license reading
+        run: python3 scripts/refresh_reading.py
+      - name: Publish collection
+        run: |
+          if git diff --quiet -- open-reading.json; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add open-reading.json
+          git commit -m "Refresh ARETE open educational reading"
+          git pull --rebase
+          git push

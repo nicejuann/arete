@@ -1,0 +1,90 @@
+{
+  "Science": [
+    "Plate tectonics",
+    "Bioluminescence",
+    "Aurora",
+    "Photosynthesis",
+    "Ocean current",
+    "Water cycle",
+    "Coral reef",
+    "Redshift",
+    "Gravitational lens",
+    "Stellar nucleosynthesis",
+    "Milky Way",
+    "Electromagnetic spectrum",
+    "Seasons",
+    "Ecological succession",
+    "Symbiosis",
+    "Mycorrhiza",
+    "Ocean acidification",
+    "Great Barrier Reef",
+    "Cloud",
+    "Hummingbird"
+  ],
+  "History": [
+    "History of paper",
+    "History of printing",
+    "Silk Road",
+    "Library of Alexandria",
+    "Antikythera mechanism",
+    "History of the calendar",
+    "Indus Valley Civilisation",
+    "History of cartography",
+    "History of the telescope",
+    "History of agriculture",
+    "History of photography",
+    "History of writing"
+  ],
+  "Art": [
+    "Woodblock printing",
+    "Linear perspective",
+    "Color theory",
+    "Mosaic",
+    "Fresco",
+    "Impressionism",
+    "Cloisonné",
+    "Gothic architecture"
+  ],
+  "Learning": [
+    "Spaced repetition",
+    "Testing effect",
+    "Encoding specificity principle",
+    "Interleaving",
+    "Metacognition",
+    "Concept map",
+    "Method of loci",
+    "Scientific method"
+  ],
+  "Psychology": [
+    "Gestalt psychology",
+    "Change blindness",
+    "Inattentional blindness",
+    "Mere-exposure effect",
+    "Serial-position effect",
+    "Cognitive bias"
+  ],
+  "Finance": [
+    "Opportunity cost",
+    "Comparative advantage",
+    "Compound interest",
+    "Time value of money",
+    "Economies of scale",
+    "Price elasticity of demand"
+  ],
+  "Literature": [
+    "Epic poetry",
+    "Sonnet",
+    "Haiku",
+    "Allegory",
+    "Bildungsroman",
+    "Narrative structure"
+  ],
+  "Philosophy": [
+    "Stoicism",
+    "Socratic method",
+    "Epistemology",
+    "Philosophy of science",
+    "Virtue ethics",
+    "Thought experiment"
+  ]
+}

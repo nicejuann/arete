@@ -21,3 +21,6 @@ body.light{--bg:#f4f1e9;--surface:#fffdf9;--surface2:#f1eee5;--text:#202b25;--mu
 
 /* v0.7 museum stories and balanced publisher discovery */
 .web-filters{display:flex;gap:6px;overflow:auto;scrollbar-width:none;margin:9px 0}.web-filters button{white-space:nowrap;font-size:12px;padding:7px 10px}.web-filters button[aria-pressed=true]{color:var(--accent);border-color:var(--accent);background:var(--surface2)}.has-photo .photo img{height:auto;max-height:420px;width:100%;object-fit:contain;aspect-ratio:auto}.has-photo .photo figcaption{font-size:10px;line-height:1.5}.web-digest{margin:14px 0 22px}.web-item strong{font-size:16px;font-weight:650}.web-item{padding:13px 0}
+
+/* v0.8 substantive open-source readings */
+.open-reading{border:1px solid var(--line);border-radius:15px;background:var(--surface);padding:16px;margin:14px 0 22px}.open-reading h2{font-size:24px;margin:4px 0}.open-reading .row button{font-size:12px;padding:8px 10px}.open-article{border-top:1px solid var(--line);padding:17px 0 6px}.open-article h3{font:600 26px/1.23 Georgia,serif;margin:9px 0 13px}.open-text p{font-size:16px;line-height:1.75;white-space:pre-line;margin:0 0 14px;overflow-wrap:anywhere}.open-credit{font-size:11px;line-height:1.6;color:var(--muted);margin:12px 0}.open-save{font-size:13px;padding:7px 13px}.open-save[aria-pressed=true]{color:var(--accent);border-color:var(--accent)}
