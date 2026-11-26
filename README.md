@@ -35,3 +35,6 @@ Visible version label, versioned static assets, navigation network-first with of
 
 ## v0.3
 60 stable-ID articles including ten new discoveries, credited remote images, one in-feed NASA video, three interactive quizzes and an optional publisher headline digest. Remote media requires internet and may fail to load; credit and source links remain. Fresh headlines are publisher links, not editorially approved new articles. No paid APIs, trackers or autoplay. Existing local data retained. Android and remote asset rendering require retesting.
+
+## v0.3.1 — fresh-content automation
+A scheduled GitHub Actions workflow retrieves NASA and Library of Congress RSS headlines daily, using only standard free public-repository runners and Python's standard library. Run it manually from Actions → Refresh educational headlines → Run workflow to initialize it. The app reads the public raw GitHub digest because commits made with GITHUB_TOKEN do not necessarily trigger a branch-based Pages rebuild. Source failures keep previous entries; no article body is copied. Scheduled runs, runner policies and source availability are not guaranteed. Remote fetches contact GitHub/NASA/museum servers; no private bookmarks are transmitted.
