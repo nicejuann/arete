@@ -170,3 +170,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] RC29 official source structure verified again; browser failure isolated to ambiguous test navigation.
 - [x] Fix narration dispatch; verify full-text segmentation across 200 articles.
 - [ ] Confirm actual browser click tests, full authentic Bible acceptance and publication, Android testing.
+
+## RC31 acceptance
+- [x] Correct fresh reader default mismatch and add chapter-heading and canonical-boundary assertions.
+- [x] Bound individual chapter network requests and correct source attribution.
+- [ ] Confirm RC31 regression, actual browser upgrade, genuine Bible download/import, deployment and Android acceptance.

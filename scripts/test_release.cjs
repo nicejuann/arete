@@ -61,15 +61,15 @@ const rc23=vm.runInContext("(function(){const p=CONTENT.find(x=>x.id===200);cons
   const makeCache=()=>({entries:new Map(),async put(k,v){this.entries.set(typeof k==='string'?k:k.url,v)},async match(k){return this.entries.get(typeof k==='string'?k:k.url)},async addAll(requests){for(const r of requests)await this.put(r,new Response('fixture'))}});
   const cacheApi={async open(k){if(!stores.has(k))stores.set(k,makeCache());return stores.get(k)},async keys(){return [...stores.keys()]},async delete(k){return stores.delete(k)}};
   const self={registration:{scope},location:{origin:'https://example.test'},clients:{async claim(){claimed++}},async skipWaiting(){skips++},addEventListener(k,fn){handlers[k]=fn}};
-  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc30')+'"':'/* ARETE_BUILD:2.0-rc30 */')};
+  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc31')+'"':'/* ARETE_BUILD:2.0-rc31 */')};
   const swContext=vm.createContext({self,caches:cacheApi,fetch:mockFetch,Request,Response,URL,console});
   vm.runInContext(fs.readFileSync('sw.js','utf8'),swContext);
   function event(name,extra={}){let promise;handlers[name]({...extra,waitUntil:p=>promise=p,respondWith:p=>promise=p});return promise}
-  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc30'));
-  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc30');assert.equal(installed.entries.size,11);
+  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc31'));
+  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc31');assert.equal(installed.entries.size,11);
   const old=await cacheApi.open('arete-v2.0-rc29');await old.put(scope+'app.js?v=2.0-rc29',new Response('old app'));await cacheApi.open('arete-v2.0-rc28');
   await event('activate');assert.equal(claimed,1);assert.ok(stores.has('arete-v2.0-rc29')&&!stores.has('arete-v2.0-rc28'));
-  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc30'));
+  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc31'));
   const cached=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc29',method:'GET',mode:'cors'}});assert.equal(await cached.text(),'old app');
   const missing=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc99',method:'GET',mode:'cors'}});assert.equal(missing.type,'error');assert.equal(network,calls);
   await event('message',{data:{type:'ARETE_ACTIVATE_UPDATE'}});assert.equal(skips,1);

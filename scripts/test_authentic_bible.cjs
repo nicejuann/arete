@@ -29,6 +29,10 @@ assert.match(verse('REV',22,21),/grace.*(Lord|Jesus)/i);
     await page.locator('#nav [data-tab="library"]').click();
     await page.locator('[data-act="bible-open"]').click();
     await page.locator('[data-act="bible-pack-download"]:enabled').waitFor();
+    assert.equal(await page.locator('#bible-book').inputValue(),'42','Fresh reader defaults to John');
+    await page.locator('#bible-book').selectOption('0');
+    await page.locator('#bible-chapter').selectOption('1');
+    assert.equal(await page.locator('.bible-reader h3').innerText(),'Genesis 1');
     await page.locator('[data-act="bible-pack-download"]').click();
     await page.locator('[data-act="bible-pack-remove"]').waitFor({timeout:90000});
     await page.locator('.bible-verses').waitFor();
@@ -39,6 +43,7 @@ assert.match(verse('REV',22,21),/grace.*(Lord|Jesus)/i);
       await page.locator('#bible-chapter').selectOption(String(ch));
       await page.locator('[data-act="bible-load"]').click();
       await page.locator('.bible-verses').waitFor();
+      assert.equal(await page.locator('.bible-reader h3').innerText(),pack.books[book].code==='JAS'?'James '+ch:pack.books[book].code==='REV'?'Revelation '+ch:'Genesis '+ch);
       assert.match(await page.locator('.bible-verses').innerText(),pattern);
     }
     await read(58,1,/wisdom.*ask.*God/i);
@@ -48,7 +53,9 @@ assert.match(verse('REV',22,21),/grace.*(Lord|Jesus)/i);
     await page.locator('[data-act="bible-open"]').click();
     await page.locator('.bible-verses').waitFor();
     assert.match(await page.locator('.bible-verses').innerText(),/wisdom.*ask.*God/i);
+    assert.equal(await page.locator('.bible-reader h3').innerText(),'James 1');
     await read(65,22,/grace.*(Lord|Jesus)/i);
+    assert.ok(await page.locator('[data-act="bible-next"]').isDisabled(),'Last canonical chapter must not advance');
     // Remove the prepared pack, then exercise the real compressed ZIP import while offline.
     page.once('dialog',dialog=>dialog.accept());
     await page.locator('[data-act="bible-pack-remove"]').click();
@@ -63,6 +70,7 @@ assert.match(verse('REV',22,21),/grace.*(Lord|Jesus)/i);
     const identical=await page.evaluate(expected=>JSON.stringify(biblePack.books)===JSON.stringify(expected.books)&&JSON.stringify(biblePack.emptyReferences)===JSON.stringify(expected.emptyReferences),{books:pack.books,emptyReferences:pack.emptyReferences});
     assert.ok(identical,'Imported archive and prepared pack differ');
     await read(0,1,/in the beginning.*God.*created.*heaven.*earth/i);
+    assert.ok(await page.locator('[data-act="bible-prev"]').isDisabled(),'First canonical chapter must not go backward');
     assert.equal(errors.length,0,errors.join('\n'));
     console.log('Official eBible pack + compressed ZIP passed: source fingerprint, 66 books, 1189 chapters, '+pack.verseCount+' verses, offline Genesis/James/Revelation and local ZIP import.');
   }finally{await browser.close()}

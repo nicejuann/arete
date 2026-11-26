@@ -11,6 +11,7 @@ on:
       - 'scripts/test_release.cjs'
       - 'scripts/test_browser.cjs'
       - 'scripts/test_upgrade.cjs'
+      - 'scripts/test_authentic_bible.cjs'
       - 'scripts/build_bible.py'
       - 'scripts/audit_links.py'
       - 'scripts/source_inventory.cjs'
@@ -42,7 +43,7 @@ jobs:
           node scripts/test_browser.cjs
       - name: Upgrade from exact preceding release
         run: |
-          git fetch --no-tags --depth=1 origin f686f163aff7d27338e460a1d0f4165d0abc03e8
+          git fetch --no-tags --depth=1 origin 3c483db9deacffcd572ae3635fc85857815a48c2
           node scripts/test_upgrade.cjs
   link-audit:
     runs-on: ubuntu-latest
