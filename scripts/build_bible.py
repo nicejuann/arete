@@ -14,25 +14,33 @@ def build(raw):
         if len(names)!=1: raise ValueError("Expected exactly one VPL source file")
         if z.getinfo(names[0]).file_size>20000000: raise ValueError("VPL too large")
         text=z.read(names[0]).decode("utf-8-sig")
-    for line in text.splitlines():
-        m=re.match(r"^\s*([1-3]?[A-Za-z]+)\s+(\d+):(\d+)\s+(.+)$",line)
+    empty=[]
+    seen=set()
+    for lineno,line in enumerate(text.splitlines(),1):
+        m=re.fullmatch(r"\s*([1-3]?[A-Za-z]+)\s+(\d+):(\d+)(?:[ \t]+(.*))?",line)
         if not m:
-            if re.match(r"^\s*\S+\s+\d+:\d+",line): raise ValueError("Malformed verse reference")
+            if re.match(r"^\s*\S+\s+\d+:\d+",line):
+                raise ValueError(f"Malformed verse reference at line {lineno}: {line[:55]!r}")
             continue
         name,ch,verse,value=m.groups()
         code=ALIASES.get(name.upper())
-        if code is None: raise ValueError("Unknown book code "+name)
+        if code is None: raise ValueError(f"Unknown book code {name} at line {lineno}")
         ch,verse=int(ch),int(verse)
-        if not 1<=ch<=len(books[code]) or not 1<=verse<=176: raise ValueError("Invalid reference")
-        chapter=books[code][ch-1]
-        if verse in chapter: raise ValueError("Duplicate verse")
-        chapter[verse]=value
+        if not 1<=ch<=len(books[code]) or not 1<=verse<=176: raise ValueError(f"Invalid reference {code} {ch}:{verse} at line {lineno}")
+        key=(code,ch,verse)
+        if key in seen: raise ValueError(f"Duplicate verse {code} {ch}:{verse} at line {lineno}")
+        seen.add(key)
+        if not value or not value.strip():
+            empty.append({"code":code,"chapter":ch,"verse":verse})
+            continue
+        if len(value)>=12000: raise ValueError(f"Oversized verse {code} {ch}:{verse}")
+        books[code][ch-1][verse]=value
     ordered=[{"code":c,"chapters":[[{"verse":v,"text":t} for v,t in sorted(ch.items())] for ch in books[c]]} for c in CODES]
     chapters=sum(len(b["chapters"]) for b in ordered)
     count=sum(len(ch) for b in ordered for ch in b["chapters"])
     if len(ordered)!=66 or chapters!=1189 or count<30000 or any(not ch for b in ordered for ch in b["chapters"]):
         raise ValueError(f"Incomplete Scripture pack: {chapters} chapters, {count} verses")
-    return {"edition":"engwebp","source":SOURCE,"sourceSha256":hashlib.sha256(raw).hexdigest(),"verseCount":count,"books":ordered}
+    return {"edition":"engwebp","source":SOURCE,"sourceSha256":hashlib.sha256(raw).hexdigest(),"verseCount":count,"emptyReferences":empty,"books":ordered}
 def main():
     req=urllib.request.Request(SOURCE,headers={"User-Agent":"ARETE/1.2 (https://github.com/nicejuann/arete)"})
     for attempt in range(3):
@@ -48,15 +56,22 @@ def main():
     if len(raw)>15000000: raise ValueError("Archive too large")
     pack=build(raw)
     (ROOT/"bible-webp.json").write_text(json.dumps(pack,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
-    print("Validated 66 books, 1189 chapters,",pack["verseCount"],"verses")
+    print("Validated 66 books, 1189 chapters,",pack["verseCount"],"nonempty verses;",len(pack["emptyReferences"]),"explicit empty references")
+    print("Official archive SHA-256:",pack["sourceSha256"])
 def self_test():
     assert len(CODES)==66 and sum(COUNTS)==1189
-    b=io.BytesIO()
-    with zipfile.ZipFile(b,"w") as z: z.writestr("engwebp_vpl.txt","GEN 1:1 Test\n")
-    try: build(b.getvalue())
-    except ValueError: pass
-    else: raise AssertionError("Incomplete pack accepted")
-    print("Bible parser fixture: incomplete pack rejected")
+    def archive(text):
+        b=io.BytesIO()
+        with zipfile.ZipFile(b,"w") as z:z.writestr("engwebp_vpl.txt",text)
+        return b.getvalue()
+    fixture="\n".join(f"{c} {ch}:{v} Synthetic fixture" for c,n in zip(CODES,COUNTS) for ch in range(1,n+1) for v in range(1,28))
+    pack=build(archive(fixture+"\nMAT 17:28\n"))
+    assert pack["verseCount"]==32103 and pack["emptyReferences"]==[{"code":"MAT","chapter":17,"verse":28}]
+    for text in ("GEN 1:1 Test\n",fixture+"\nMAT 17:1\n",fixture+"\nMAT 17:28\nMAT 17:28\n",fixture+"\nMAT 17:28-29 Unexpected"):
+        try:build(archive(text))
+        except ValueError:pass
+        else:raise AssertionError("Invalid pack accepted")
+    print("Bible parser fixtures: full synthetic structure, explicit empty verse, duplicate and malformed references passed")
 if __name__=="__main__":
     if "--self-test" in sys.argv: self_test()
     else: main()

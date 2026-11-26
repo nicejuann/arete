@@ -149,3 +149,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] RC25 deployment and automated jobs passed.
 - [x] Exact preceding-release upgrade test added, update UX hardened, article records unchanged.
 - [ ] Confirm RC26 upgrade browser test and deployment; test on physical Android and verify authentic media/Bible and claims.
+
+## RC27 acceptance
+- [x] RC26 automated and deployment results passed, including exact preceding-release upgrade.
+- [x] Both parsers updated for explicit empty references and line diagnostics; JavaScript synthetic regression passed.
+- [ ] Confirm official eBible archive build and artifact; verify actual text in Chromium and on Android before calling the Bible complete.

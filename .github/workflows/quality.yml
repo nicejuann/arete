@@ -11,6 +11,7 @@ on:
       - 'scripts/test_release.cjs'
       - 'scripts/test_browser.cjs'
       - 'scripts/test_upgrade.cjs'
+      - 'scripts/build_bible.py'
       - 'scripts/audit_links.py'
       - 'scripts/source_inventory.cjs'
       - '.github/workflows/quality.yml'
@@ -26,6 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: node scripts/test_release.cjs
+      - run: python3 scripts/build_bible.py --self-test
   browser:
     runs-on: ubuntu-24.04
     timeout-minutes: 12
@@ -40,7 +42,7 @@ jobs:
           node scripts/test_browser.cjs
       - name: Upgrade from exact preceding release
         run: |
-          git fetch --no-tags --depth=1 origin 0607cc35a02f3fc9bdebf4dbbaf0b840d18246b4
+          git fetch --no-tags --depth=1 origin cb3143b8e85bfeb92d09270315a72a944f107393
           node scripts/test_upgrade.cjs
   link-audit:
     runs-on: ubuntu-latest
