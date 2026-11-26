@@ -89,3 +89,6 @@ A dedicated Watch & Listen collection deduplicates existing publisher resources 
 
 ## v1.8 — broader reading collection
 Sixteen original source-linked articles in philosophy, literature, art, Philippine history, psychology and science. 170 originals and 46 quizzes. New article view shows IDs 155–170. Added persistent regression checks for sequential IDs, unique titles, quiz indexes, and HTTPS source fields. Source pages were located in current web research; editorial prose is independently written, not copied. Existing saves, guides and media collection passed simulated checks. Full link audit, real Android playback/import and Bible pack publication remain unverified. No paid services added.
+
+## v1.9 — visual discovery
+Two new original art stories with public-domain images from verified Met collection API records, six original offline diagrams for existing articles, true visual-only filtering (including diagrams), compact visual previews, and accessible image failure messaging. Existing source links and stable IDs preserved. Visual-only filtering respects enabled topics and unread settings. No external image delivery or Android playback tests are claimed. Full Bible pack still requires verification. No paid services added.
