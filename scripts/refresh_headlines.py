@@ -64,7 +64,7 @@ def main():
         for item in entries:
             merged[item["url"]] = item
     items = sorted(merged.values(), key=lambda item:item["date"], reverse=True)[:50]
-    if items == old.get("items",[]):
+    if items == old.get("items",[]) and old.get("updated"):
         print("No headline changes")
         return
     payload = {"updated":dt.datetime.now(dt.timezone.utc).isoformat(),"items":items}
