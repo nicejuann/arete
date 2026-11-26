@@ -57,3 +57,6 @@ body.light{--bg:#f4f1e9;--surface:#fffdf9;--surface2:#f1eee5;--text:#202b25;--mu
 
 /* v1.9 visual reliability */
 .photo-unavailable{padding:24px 16px;background:var(--surface2);color:var(--muted);text-align:center;font-size:13px;line-height:1.5}.photo img[hidden]{display:none!important}.compact-story .explain-figure{margin:12px 0}.explain-figure svg text{font-size:11px}
+
+/* RC13: discreet source-review metadata */
+.editorial-review-label{color:var(--muted);font-size:11px!important;line-height:1.4;margin:6px 0 12px;overflow-wrap:anywhere}
