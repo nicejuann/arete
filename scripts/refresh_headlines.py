@@ -10,10 +10,11 @@ import xml.etree.ElementTree as ET
 PATH = pathlib.Path(__file__).resolve().parents[1] / "fresh.json"
 FEEDS = (
     ("NASA", "https://www.nasa.gov/news-release/feed/"),
+    ("NASA Image of the Day", "https://www.nasa.gov/feeds/iotd-feed/"),
     ("Library of Congress", "https://blogs.loc.gov/thesignal/feed/"),
     ("Library of Congress History", "https://blogs.loc.gov/teachers/feed/"),
-    ("Smithsonian Science", "https://feeds.feedburner.com/smithsonianmag/science-nature"),
-    ("Smithsonian History", "https://feeds.feedburner.com/smithsonianmag/history-archaeology"),
+    ("Smithsonian Science", "https://www.smithsonianmag.com/rss/science-nature/"),
+    ("Smithsonian History", "https://www.smithsonianmag.com/rss/history/"),
 )
 HOSTS = {"www.nasa.gov", "science.nasa.gov", "blogs.loc.gov", "www.loc.gov", "www.smithsonianmag.com", "smithsonianmag.com", "www.science.org"}
 

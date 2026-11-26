@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: '23 0 * * *'
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh_headlines.py'
+      - '.github/workflows/refresh-headlines.yml'
 permissions:
   contents: write
 concurrency:
