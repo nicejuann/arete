@@ -1,9 +1,9 @@
-# ARETÉ v2.0 RC14 acceptance checklist
+# ARETÉ v2.0 RC15 acceptance checklist
 
 This is a release candidate, not a claim of production readiness.
 
 ## Android / installed app
-- [ ] Open app and verify version 2.0-rc14.
+- [ ] Open app and verify version 2.0-rc15.
 - [ ] Read and save an article, add a note, mark it read, close and reopen.
 - [ ] Change favorites, theme, text size and feed layout; restart and confirm persistence.
 - [ ] Search by topic and accented name, open a result and return.
@@ -35,7 +35,7 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 
 ## RC4 editorial progress
 - [x] First ten source-aligned article revisions, with dated scope and preserved IDs.
-- [ ] Review remaining 36 articles, including source suitability and factual claims.
+- [ ] Review remaining 16 articles, including source suitability and factual claims.
 - [ ] Independently verify revised articles and actual media links.
 
 ## RC5 editorial progress
@@ -84,3 +84,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Twenty further source-aligned revisions; 140 of 176 revised and none under 120 words.
 - [x] Reading paragraph text-preservation and escaping checks; RC13 browser, regression and link-audit jobs passed.
 - [ ] Verify RC14 workflow, actual phone reading experience, media and authentic Bible import; independently verify revised claims.
+
+## RC15 editorial and reading progress
+- [x] Twenty further source-aligned revisions; 160 of 176 revised.
+- [x] Focused reading return position and reset simulated checks; RC14 browser, regression and link-audit jobs passed.
+- [ ] Verify RC15 workflow, Android reading and actual multimedia; independently review claims and Bible import.
