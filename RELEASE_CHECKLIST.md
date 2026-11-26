@@ -1,9 +1,9 @@
-# ARETÉ v2.0 RC1 acceptance checklist
+# ARETÉ v2.0 RC2 acceptance checklist
 
 This is a release candidate, not a claim of production readiness.
 
 ## Android / installed app
-- [ ] Open app and verify version 2.0-rc1.
+- [ ] Open app and verify version 2.0-rc2.
 - [ ] Read and save an article, add a note, mark it read, close and reopen.
 - [ ] Change favorites, theme, text size and feed layout; restart and confirm persistence.
 - [ ] Search by topic and accented name, open a result and return.
@@ -21,4 +21,9 @@ This is a release candidate, not a claim of production readiness.
 - [ ] Complete integrated Bible build and verify actual text/edition.
 - [ ] Evaluate daily use against the original purpose: voluntary learning instead of recreational scrolling.
 
-Existing content counts at RC1 preparation: 176 originals, 48 quizzes, 20 photographic articles, 16 new-style inline diagrams, 24 distinct multimedia links, 5 guided paths. Previous imports: 42 headlines, 11 open readings, 6 museum records. No paid services required. External sources may have their own costs or restrictions. Browser/device storage can be cleared; back up personal data.
+Existing content counts at RC2 preparation: 176 originals, 48 quizzes, 20 photographic articles, 16 new-style inline diagrams, 24 distinct multimedia links, 5 guided paths. Previous imports: 42 headlines, 11 open readings, 6 museum records. No paid services required. External sources may have their own costs or restrictions. Browser/device storage can be cleared; back up personal data.
+
+## RC2 additional acceptance
+- [ ] Download the official engwebp_vpl.zip from eBible.org, import it in the Bible reader, compare several verses with eBible, and reopen in airplane mode.
+- [ ] Confirm incomplete/incorrect ZIP rejection without replacing an existing offline pack.
+- [ ] Confirm full archive import and download remain independent of app updates. Structural checks alone do not establish text authenticity or verse-level completeness.
