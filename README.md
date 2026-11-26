@@ -1,4 +1,4 @@
-# ARETÉ v0.1 — Personal prototype
+# ARETÉ v0.2 — Personal prototype
 
 A dependency-free, mobile-first Progressive Web App. No account, API keys, build step, analytics, ads or paid services. This is a first version, not a public-ready product.
 
@@ -26,3 +26,6 @@ Starter cards are original short explanations and reflections with links to supp
 
 ## Testing status
 JavaScript syntax checks passed for app, content and service worker. Chromium mobile-size rendering and core interactions (feed, expanding cards, bookmarks, notes, mark read, topic switch, search) passed in an inline test harness using simulated storage. Direct local HTTP and file navigation were blocked by the test environment, so native storage persistence, service-worker offline behavior, actual Android installation, narration and device sharing remain unverified. Test these on the published HTTPS site before calling the PWA deployment complete.
+
+## v0.2 changes
+All 50 starter articles expanded with original examples; full content visible directly in feed. Existing IDs and local storage schema retained. Improved typography, concept panels, four original educational diagrams, selected links to human narration and educational videos, and device voice selection. Media requires internet. This remains a prototype; a comprehensive factual/licensing audit, photographic library, automated content ingestion, native audio quality and Android regression testing remain pending. The original testing status below applies only to v0.1.
