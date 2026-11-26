@@ -1,0 +1,56 @@
+// Real Chromium mobile viewport smoke test; no external sources needed.
+const {chromium}=require('playwright');
+const assert=require('node:assert/strict');
+(async()=>{
+  const browser=await chromium.launch({headless:true});
+  try{
+    const context=await browser.newContext({viewport:{width:393,height:873},isMobile:true,hasTouch:true,deviceScaleFactor:2});
+    const page=await context.newPage();
+    const errors=[];
+    page.on('pageerror',e=>errors.push(e.message));
+    await page.route('**/*',r=>r.request().url().startsWith('http://127.0.0.1:8765/')?r.continue():r.abort());
+    await page.goto('http://127.0.0.1:8765/',{waitUntil:'domcontentloaded'});
+    await page.locator('.discovery-hub').waitFor();
+    await page.locator('[data-act="focus"][data-focus="original"]').click();
+    const first=page.locator('article.editorial').first();
+    const id=await first.getAttribute('id');
+    assert.ok(id);
+    await first.locator('[data-act="save"]').click();
+    await page.locator('[data-tab="saved"]').click();
+    assert.equal(await page.locator('#'+id).count(),1);
+    await page.reload();
+    await page.locator('#'+id).waitFor();
+    await page.locator('[data-tab="discover"]').click();
+    await page.locator('[data-act="focus"][data-focus="original"]').click();
+    await page.locator('[data-act="unread"]').click();
+    const unread=page.locator('article.editorial').first();
+    const unreadId=await unread.getAttribute('id');
+    await unread.locator('[data-act="read"]').click();
+    assert.equal(await page.locator('#'+unreadId).count(),0);
+    await page.locator('[data-act="focus"][data-focus="quiz"]').click();
+    await page.locator('.quiz-option').first().click();
+    await page.locator('.quiz-answer').first().waitFor();
+    await page.locator('[data-tab="explore"]').click();
+    await page.locator('#search').fill('moon');
+    await page.locator('[data-act="search-open"]').first().click();
+    await page.locator('[data-act="search-back"]').click();
+    await page.locator('.search-hit').first().waitFor();
+    await page.locator('[data-tab="profile"]').click();
+    await page.locator('#reading-size').selectOption('large');
+    assert.ok(await page.locator('body').evaluate(e=>e.classList.contains('large-reading')));
+    await page.locator('[data-tab="library"]').click();
+    await page.locator('#book-file').setInputFiles({name:'test-book.txt',mimeType:'text/plain',buffer:Buffer.from('A sample personal book.\n\nSecond paragraph.')});
+    await page.locator('.book-text').waitFor();
+    assert.match(await page.locator('.book-text').innerText(),/sample personal book/);
+    await page.locator('[data-tab="discover"]').click();
+    await page.evaluate(async()=>{await navigator.serviceWorker.ready});
+    await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+    await context.setOffline(true);
+    await page.reload({waitUntil:'domcontentloaded'});
+    await page.locator('.discovery-hub').waitFor();
+    await page.locator('[data-act="focus"][data-focus="original"]').click();
+    await page.locator('article.editorial').first().waitFor();
+    assert.equal(errors.length,0,errors.join('\n'));
+    console.log('Mobile Chromium smoke test passed: navigation, saved persistence, unread, quiz, search, text size, TXT import and offline reload.');
+  }finally{await browser.close()}
+})().catch(e=>{console.error(e);process.exitCode=1});
