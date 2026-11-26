@@ -125,3 +125,6 @@ Ten further existing articles revised (IDs 66, 67, 71, 72, 110, 115, 117, 119, 1
 
 ## v2.0 RC10 — seventh editorial depth pass
 Ten existing articles revised (IDs 13, 22, 25, 26, 27, 28, 42, 45, 46, 49); 70 of 176 have dated source-aligned revision records. Batch mean 107 to 245 words; under-120-word articles 63 to 53. Eight distinct reference pages were successfully retrieved, and three general Scripture links now open relevant Bible chapters directly. Existing IDs, titles, quizzes and unrelated content preserved. Prior deferred LOC article remains outstanding. Independent review, CI, live deployment, media delivery, Android and authentic Bible import remain unverified. No new paid services.
+
+## v2.0 RC11 — eighth editorial depth pass
+Ten existing articles revised (IDs 16, 39, 41, 48, 65, 81, 94, 108, 139, 151); 80 of 176 have dated source-aligned revision records. Batch mean 111 to 234 words; under-120-word articles 53 to 43. All ten original references retrieved directly. Prior deferred LOC article remains outstanding. Existing IDs, titles, quizzes and unrelated content preserved. Independent review, CI, live deployment, media delivery, Android and authentic Bible import remain unverified. No new paid services.
