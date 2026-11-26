@@ -83,3 +83,6 @@ Added optional saved-original review sessions of up to five items, answer reveal
 
 ## v1.6 — connected knowledge
 Eight new independently written stories on water, atmospheric optics, ocean ecosystems, memory and economics. Five guided reading paths in Explore connect new and existing posts in deliberate sequences; progress uses existing marked-read IDs, with no new tracking. Four additional offline SVG explanations and two publisher educational video links (external playback untested). Existing v1.5 spaced recall and six diagrams preserved. Complete Bible pack publication and real-device testing remain unconfirmed. No paid services added.
+
+## v1.7 — watch and listen
+A dedicated Watch & Listen collection deduplicates existing publisher resources and adds four source-verified NOAA/NASA videos. Filter video/audio, open the original source or read an associated article. The NOAA Life on a Vent official embed and existing NASA direct video are loaded only after an explicit user action; no autoplay attribute, downloads or new tracking. Added regression and mobile-browser test coverage for media and guided reading. Source page availability was checked for the four new videos; actual media playback, CI execution, full offline Bible publication and Android-device tests remain unverified. No paid services added.
