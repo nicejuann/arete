@@ -76,3 +76,6 @@ body.light .daily-edition{background:linear-gradient(145deg,#e4ecdf,#d5e1d1);bor
 @media(min-width:600px){.daily-edition{padding:25px}.edition-lead{padding:22px}.discovery-hub{grid-template-columns:repeat(3,minmax(0,1fr))}.discovery-hub button{padding:13px 15px}}
 @media(max-width:360px){.daily-edition{padding:14px}.edition-lead{padding:15px 12px}.edition-top time{font-size:10px}.discovery-hub{grid-template-columns:repeat(2,minmax(0,1fr))}.discovery-hub button{min-height:59px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* RC18 visual reading */
+.visual-intro{padding:16px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:12px;margin:12px 0}.visual-intro h2{font:600 25px/1.2 Georgia,serif;margin:0 0 5px}.visual-intro p{font-size:13px;color:var(--muted);margin:0}.compact-story .explain-figure{margin:15px 0}.compact-story .meta{display:flex;justify-content:space-between;gap:8px}.compact-story .meta span:last-child{white-space:nowrap}.media-tile .meta{display:flex;justify-content:space-between;gap:8px}.media-tile .actions{align-items:center;justify-content:flex-start;gap:10px}.media-tile .source{padding:8px 0}.media-tile button{min-height:44px}

@@ -65,6 +65,10 @@ function zipStored(entries){
     await page.locator('[data-act="search-back"]').click();
     await page.locator('.search-hit').first().waitFor();
     await page.locator('[data-tab="discover"]').click();
+    await page.locator('[data-act="focus"][data-focus="visual"]').click();
+    await page.locator('.visual-intro').waitFor();
+    await page.locator('article.compact-story').first().waitFor();
+    assert.ok(await page.evaluate(()=>queue.every(p=>hasVisual(p))));
     await page.locator('[data-act="focus"][data-focus="media"]').click();
     await page.locator('.media-hub').waitFor();
     assert.equal(await page.locator('.media-player iframe').count(),0);
