@@ -65,3 +65,6 @@ Unread items now disappear immediately when marked read; restored hidden posts r
 
 ## v1.0 RC3 — collection resilience
 Gallery falls back to existing curated CC0 artwork records when no automated records are loaded, labeled separately. The gallery collector tries known object IDs when its initial search fails and reports failure if no initial records can be obtained. Open-reading pagination permits access beyond eight excerpts. Profile displays local collection counts, timestamps, and a combined refresh; collections also refresh on reconnect. CI and first automated gallery import still require verification. No paid services added.
+
+## v1.1 — original content expansion
+16 original stories, 134 articles total, 18 photo-assigned articles, 25 quizzes. New articles view for IDs 119–134. All three acquisition workflows produced records: 42 headlines, 11 excerpts and six museum records (same six artworks already curated, not additional unique subjects). New source pages researched; NASA image URLs from source records, actual image rendering unverified. CI/Android results not independently confirmed. No paid services added.

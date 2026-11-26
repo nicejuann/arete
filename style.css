@@ -33,3 +33,6 @@ body.light{--bg:#f4f1e9;--surface:#fffdf9;--surface2:#f1eee5;--text:#202b25;--mu
 
 /* RC3 */
 .system-status .status-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.system-status .status-row strong{font-variant-numeric:tabular-nums}.system-status p{overflow-wrap:anywhere;line-height:1.6}.open-reading .web-expand+.web-expand{margin-top:5px}
+
+/* v1.1 */
+.discovery-hub{grid-template-columns:repeat(3,minmax(0,1fr))}.discovery-hub button[data-focus=new]{font-weight:650}.editorial.has-photo .photo img{min-height:120px;max-height:420px}@media(min-width:600px){.discovery-hub{grid-template-columns:repeat(4,minmax(0,1fr))}}
