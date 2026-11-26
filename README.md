@@ -92,3 +92,6 @@ Sixteen original source-linked articles in philosophy, literature, art, Philippi
 
 ## v1.9 — visual discovery
 Two new original art stories with public-domain images from verified Met collection API records, six original offline diagrams for existing articles, true visual-only filtering (including diagrams), compact visual previews, and accessible image failure messaging. Existing source links and stable IDs preserved. Visual-only filtering respects enabled topics and unread settings. No external image delivery or Android playback tests are claimed. Full Bible pack still requires verification. No paid services added.
+
+## v1.9.1 — editorial refinement
+Four source-linked originals, two quizzes and a human-narrated audiobook catalog link. 176 originals, 48 quizzes. Nineteen manually identified thematic groups help separate closely related posts in the feed where alternatives exist, without deleting articles or changing IDs. Accent-insensitive multiword search, daily edition selection validation, browser-history cleanup. Preserves v1.9 visual-only collection and diagrams. This is not a comprehensive semantic or factual audit. Local simulated regressions passed; actual Android, external playback, CI execution and the complete Bible pack remain unverified. No paid services added.
