@@ -1,6 +1,20 @@
 // Real Chromium mobile viewport smoke test; no external sources needed.
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
+// Stored ZIP with correct CRC-32, local headers and central directory.
+function zipStored(entries){
+  const locals=[],central=[];let offset=0;
+  function crc32(b){let c=0xffffffff;for(const x of b){c^=x;for(let i=0;i<8;i++)c=(c>>>1)^((c&1)?0xedb88320:0)}return (c^0xffffffff)>>>0}
+  for(const [name,value] of entries){
+    const n=Buffer.from(name),d=Buffer.from(value),crc=crc32(d);
+    const local=Buffer.alloc(30);local.writeUInt32LE(0x04034b50,0);local.writeUInt16LE(20,4);local.writeUInt32LE(crc,14);local.writeUInt32LE(d.length,18);local.writeUInt32LE(d.length,22);local.writeUInt16LE(n.length,26);
+    const dir=Buffer.alloc(46);dir.writeUInt32LE(0x02014b50,0);dir.writeUInt16LE(20,4);dir.writeUInt16LE(20,6);dir.writeUInt32LE(crc,16);dir.writeUInt32LE(d.length,20);dir.writeUInt32LE(d.length,24);dir.writeUInt16LE(n.length,28);dir.writeUInt32LE(offset,42);
+    locals.push(local,n,d);central.push(dir,n);offset+=local.length+n.length+d.length;
+  }
+  const c=Buffer.concat(central),end=Buffer.alloc(22);end.writeUInt32LE(0x06054b50,0);end.writeUInt16LE(entries.length,8);end.writeUInt16LE(entries.length,10);end.writeUInt32LE(c.length,12);end.writeUInt32LE(offset,16);
+  return Buffer.concat([...locals,c,end]);
+}
+
 (async()=>{
   const browser=await chromium.launch({headless:true});
   try{
@@ -55,6 +69,32 @@ const assert=require('node:assert/strict');
     await page.locator('#book-file').setInputFiles({name:'test-book.txt',mimeType:'text/plain',buffer:Buffer.from('A sample personal book.\n\nSecond paragraph.')});
     await page.locator('.book-text').waitFor();
     assert.match(await page.locator('.book-text').innerText(),/sample personal book/);
+    // Import a tiny standards-shaped EPUB using a test-only file.
+    await page.locator('[data-tab="discover"]').click();
+    await page.locator('[data-tab="library"]').click();
+    const epub=zipStored([
+      ['mimetype','application/epub+zip'],
+      ['META-INF/container.xml','<?xml version="1.0"?><container xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/></rootfiles></container>'],
+      ['OEBPS/content.opf','<?xml version="1.0"?><package xmlns="http://www.idpf.org/2007/opf" version="3.0"><manifest><item id="a" href="a.xhtml" media-type="application/xhtml+xml"/></manifest><spine><itemref idref="a"/></spine></package>'],
+      ['OEBPS/a.xhtml','<?xml version="1.0"?><html xmlns="http://www.w3.org/1999/xhtml"><body><h1>Fixture chapter</h1><p>EPUB fixture paragraph.</p></body></html>']
+    ]);
+    await page.locator('#book-file').setInputFiles({name:'fixture.epub',mimeType:'application/epub+zip',buffer:epub});
+    await page.locator('.book-text').waitFor();
+    assert.match(await page.locator('.book-text').innerText(),/EPUB fixture paragraph/);
+    // Test invalid Bible archive, then a full synthetic structure. No real Scripture is implied.
+    await page.locator('[data-tab="profile"]').click();
+    await page.locator('input[data-topic="Faith"]').check();
+    await page.locator('[data-tab="library"]').click();
+    await page.locator('[data-act="bible-open"]').click();
+    await page.locator('#bible-pack-file').waitFor({state:'attached'});
+    await page.waitForFunction(()=>!document.querySelector('[data-act="bible-pack-import"]').disabled);
+    await page.locator('#bible-pack-file').setInputFiles({name:'engwebp_vpl.zip',mimeType:'application/zip',buffer:zipStored([['engwebp_vpl.txt','GEN 1:1 Synthetic fixture']])});
+    await page.getByText('Incomplete or invalid archive:',{exact:false}).waitFor();
+    const text=await page.evaluate(()=>PACK_CODES.flatMap((code,i)=>Array.from({length:BIBLE_BOOKS[i][1]},(_,j)=>Array.from({length:27},(_,v)=>code+' '+(j+1)+':'+(v+1)+' Synthetic fixture, not Scripture').join('\n')).join('\n')).join('\n'));
+    await page.locator('#bible-pack-file').setInputFiles({name:'engwebp_vpl.zip',mimeType:'application/zip',buffer:zipStored([['engwebp_vpl.txt',text]])});
+    await page.locator('[data-act="bible-pack-remove"]').waitFor();
+    await page.locator('.bible-verses').waitFor();
+    assert.match(await page.locator('.bible-verses').innerText(),/Synthetic fixture/);
     await page.locator('[data-tab="discover"]').click();
     await page.evaluate(async()=>{await navigator.serviceWorker.ready});
     await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
@@ -63,6 +103,10 @@ const assert=require('node:assert/strict');
     await page.locator('.discovery-hub').waitFor();
     await page.locator('[data-act="focus"][data-focus="original"]').click();
     await page.locator('article.editorial').first().waitFor();
+    await page.locator('[data-tab="library"]').click();
+    await page.locator('[data-act="bible-open"]').click();
+    await page.locator('.bible-verses').waitFor();
+    assert.match(await page.locator('.bible-verses').innerText(),/Synthetic fixture/);
     assert.equal(errors.length,0,errors.join('\n'));
     console.log('Mobile Chromium smoke test passed: navigation, saved persistence, unread, quiz, search, text size, TXT import and offline reload.');
   }finally{await browser.close()}
