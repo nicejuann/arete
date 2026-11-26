@@ -1,9 +1,9 @@
-# ARETÉ v2.0 RC11 acceptance checklist
+# ARETÉ v2.0 RC12 acceptance checklist
 
 This is a release candidate, not a claim of production readiness.
 
 ## Android / installed app
-- [ ] Open app and verify version 2.0-rc11.
+- [ ] Open app and verify version 2.0-rc12.
 - [ ] Read and save an article, add a note, mark it read, close and reopen.
 - [ ] Change favorites, theme, text size and feed layout; restart and confirm persistence.
 - [ ] Search by topic and accented name, open a result and return.
@@ -35,7 +35,7 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 
 ## RC4 editorial progress
 - [x] First ten source-aligned article revisions, with dated scope and preserved IDs.
-- [ ] Review remaining 96 articles, including source suitability and factual claims.
+- [ ] Review remaining 76 articles, including source suitability and factual claims.
 - [ ] Independently verify revised articles and actual media links.
 
 ## RC5 editorial progress
@@ -65,3 +65,10 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 ## RC11 editorial progress
 - [x] Eighth ten source-aligned article revisions; all ten original references retrieved.
 - [ ] Independent factual review and prior unresolved LOC link.
+
+## RC12 editorial and narration progress
+- [x] Twenty further source-aligned revisions; direct replacement for previously deferred photo-analysis reference.
+- [x] All 176 narration inputs preserved in word-boundary chunks; source syntax checks passed.
+- [x] Profile reports editorial pass counts, not certification.
+- [ ] Independently verify revised claims and previously blocked references elsewhere in the collection.
+- [ ] Test narration on Android, including interruption, long articles and selected voice; confirm actual CI and Pages deployment.
