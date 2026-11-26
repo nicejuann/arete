@@ -5,7 +5,7 @@ SOURCE="https://ebible.org/Scriptures/engwebp_vpl.zip"
 CODES="GEN EXO LEV NUM DEU JOS JDG RUT 1SA 2SA 1KI 2KI 1CH 2CH EZR NEH EST JOB PSA PRO ECC SNG ISA JER LAM EZK DAN HOS JOL AMO OBA JON MIC NAM HAB ZEP HAG ZEC MAL MAT MRK LUK JHN ACT ROM 1CO 2CO GAL EPH PHP COL 1TH 2TH 1TI 2TI TIT PHM HEB JAS 1PE 2PE 1JN 2JN 3JN JUD REV".split()
 COUNTS=[50,40,27,36,34,24,21,4,31,24,22,25,29,36,10,13,10,42,150,31,12,8,66,52,5,48,12,14,3,9,1,4,7,3,3,3,2,14,4,28,16,24,21,28,16,16,13,6,6,4,4,5,3,6,4,3,1,13,5,5,3,5,1,1,1,22]
 ALIASES=dict(zip(CODES,CODES))
-for code, variants in {"EXO":"EXOD","DEU":"DEUT","JOS":"JOSH","JDG":"JUDG","RUT":"RUTH","1SA":"1SAM","2SA":"2SAM","1KI":"1KGS 1KING","2KI":"2KGS 2KING","1CH":"1CHR","2CH":"2CHR","PSA":"PS PSALM PSALMS","PRO":"PROV","ECC":"ECCL","SNG":"SOL SONG SOS","EZK":"EZE EZEK","JOL":"JOE JOEL","NAM":"NAH","MAT":"MATT","MRK":"MAR MARK","LUK":"LUKE","JHN":"JOH JOHN","1CO":"1COR","2CO":"2COR","PHP":"PHI PHIL","1TH":"1THESS","2TH":"2THESS","1TI":"1TIM","2TI":"2TIM","PHM":"PHLM","1PE":"1PET","2PE":"2PET","1JN":"1JO 1JOHN","2JN":"2JO 2JOHN","3JN":"3JO 3JOHN","JUD":"JUDE","REV":"REVELATION"}.items():
+for code, variants in {"EXO":"EXOD","DEU":"DEUT","JOS":"JOSH","JDG":"JUDG","RUT":"RUTH","1SA":"1SAM","2SA":"2SAM","1KI":"1KGS 1KING","2KI":"2KGS 2KING","1CH":"1CHR","2CH":"2CHR","PSA":"PS PSALM PSALMS","PRO":"PROV","ECC":"ECCL","SNG":"SOL SONG SOS","EZK":"EZE EZEK","JOL":"JOE JOEL","NAM":"NAH","MAT":"MATT","MRK":"MAR MARK","LUK":"LUKE","JHN":"JOH JOHN","1CO":"1COR","2CO":"2COR","PHP":"PHI PHIL","1TH":"1THESS","2TH":"2THESS","1TI":"1TIM","2TI":"2TIM","PHM":"PHLM","JAS":"JAM","1PE":"1PET","2PE":"2PET","1JN":"1JO 1JOHN","2JN":"2JO 2JOHN","3JN":"3JO 3JOHN","JUD":"JUDE","REV":"REVELATION"}.items():
     for variant in variants.split(): ALIASES[variant]=code
 def build(raw):
     books={c:[{} for _ in range(n)] for c,n in zip(CODES,COUNTS)}
@@ -14,6 +14,10 @@ def build(raw):
         if len(names)!=1: raise ValueError("Expected exactly one VPL source file")
         if z.getinfo(names[0]).file_size>20000000: raise ValueError("VPL too large")
         text=z.read(names[0]).decode("utf-8-sig")
+    # Report all unfamiliar codes in a single failure, rather than retrying one at a time.
+    observed={m.group(1).upper() for m in re.finditer(r"^[ \t]*([1-3]?[A-Za-z]+)[ \t]+\d+:\d+",text,re.M)}
+    unknown=sorted(observed-set(ALIASES))
+    if unknown:raise ValueError("Unknown book codes: "+", ".join(unknown))
     empty=[]
     seen=set()
     for lineno,line in enumerate(text.splitlines(),1):
@@ -58,6 +62,7 @@ def main():
     (ROOT/"bible-webp.json").write_text(json.dumps(pack,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
     print("Validated 66 books, 1189 chapters,",pack["verseCount"],"nonempty verses;",len(pack["emptyReferences"]),"explicit empty references")
     print("Official archive SHA-256:",pack["sourceSha256"])
+    if "--keep-source" in sys.argv:(ROOT/"bible-source.zip").write_bytes(raw)
 def self_test():
     assert len(CODES)==66 and sum(COUNTS)==1189
     def archive(text):
@@ -65,9 +70,9 @@ def self_test():
         with zipfile.ZipFile(b,"w") as z:z.writestr("engwebp_vpl.txt",text)
         return b.getvalue()
     fixture="\n".join(f"{c} {ch}:{v} Synthetic fixture" for c,n in zip(CODES,COUNTS) for ch in range(1,n+1) for v in range(1,28))
-    pack=build(archive(fixture+"\nMAT 17:28\n"))
+    pack=build(archive(fixture.replace("JAS ","JAM ")+"\nMAT 17:28\n"))
     assert pack["verseCount"]==32103 and pack["emptyReferences"]==[{"code":"MAT","chapter":17,"verse":28}]
-    for text in ("GEN 1:1 Test\n",fixture+"\nMAT 17:1\n",fixture+"\nMAT 17:28\nMAT 17:28\n",fixture+"\nMAT 17:28-29 Unexpected"):
+    for text in ("GEN 1:1 Test\n",fixture+"\nMAT 17:1\n",fixture+"\nMAT 17:28\nMAT 17:28\n",fixture+"\nMAT 17:28-29 Unexpected",fixture+"\nXYZ 1:1 Unknown"):
         try:build(archive(text))
         except ValueError:pass
         else:raise AssertionError("Invalid pack accepted")

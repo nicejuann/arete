@@ -7,6 +7,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/build_bible.py'
+      - 'scripts/test_authentic_bible.cjs'
       - '.github/workflows/build-bible.yml'
 permissions:
   contents: write
@@ -15,12 +16,19 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/build_bible.py --self-test
-      - run: python3 scripts/build_bible.py
+      - run: python3 scripts/build_bible.py --keep-source
+      - run: npm install --no-save --no-package-lock playwright@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - name: Official archive and offline browser acceptance
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/arete-bible-server.log 2>&1 &
+          for i in $(seq 1 15); do curl -fs http://127.0.0.1:8765/ >/dev/null && break; sleep 1; done
+          node scripts/test_authentic_bible.cjs
       - uses: actions/upload-artifact@v4
         with:
           name: verified-bible-pack

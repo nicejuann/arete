@@ -154,3 +154,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] RC26 automated and deployment results passed, including exact preceding-release upgrade.
 - [x] Both parsers updated for explicit empty references and line diagnostics; JavaScript synthetic regression passed.
 - [ ] Confirm official eBible archive build and artifact; verify actual text in Chromium and on Android before calling the Bible complete.
+
+## RC28 acceptance
+- [x] RC27 release and cross-version checks passed; Bible build log isolated JAM alias failure.
+- [x] Explicit JAM alias, unknown-code preflight and synthetic JavaScript regression.
+- [ ] Official-source build, authentic Chromium download/import and publishing; verify real Android and remaining content/media.
