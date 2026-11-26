@@ -1,9 +1,9 @@
-# ARETÉ v2.0 RC15 acceptance checklist
+# ARETÉ v2.0 RC16 acceptance checklist
 
 This is a release candidate, not a claim of production readiness.
 
 ## Android / installed app
-- [ ] Open app and verify version 2.0-rc15.
+- [ ] Open app and verify version 2.0-rc16.
 - [ ] Read and save an article, add a note, mark it read, close and reopen.
 - [ ] Change favorites, theme, text size and feed layout; restart and confirm persistence.
 - [ ] Search by topic and accented name, open a result and return.
@@ -89,3 +89,11 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Twenty further source-aligned revisions; 160 of 176 revised.
 - [x] Focused reading return position and reset simulated checks; RC14 browser, regression and link-audit jobs passed.
 - [ ] Verify RC15 workflow, Android reading and actual multimedia; independently review claims and Bible import.
+
+## RC16 initial editorial baseline
+- [x] All 176 original articles have undergone an initial substantive editorial revision; 48 quizzes preserved.
+- [x] All article IDs, titles and source URL format preserved/validated; full collection minimum 150 words.
+- [x] Profile transparently reports initial editorial completion; regression baseline asserts 176 dated revision records and 48 quizzes.
+- [ ] Independently verify factual claims and licensing across the entire collection, and check links/media on Android; prior pass source claims are not independently certified.
+- [ ] Confirm RC16 browser, regression and link-audit results and Pages deployment.
+- [ ] Evaluate real reading enjoyment, visual quality, narration, and authentic offline Bible import before stable release.
