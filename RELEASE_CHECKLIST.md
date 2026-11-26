@@ -180,3 +180,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Prepared complete Bible pack committed to main.
 - [x] Direct Scripture reference navigation and verse-range highlighting implemented; parser and authentic offline browser assertions added.
 - [ ] Confirm RC32 regression, offline reference jump and exact preceding-release upgrade, deployment, physical Android and independent editorial verification.
+
+## RC33 acceptance
+- [x] Add accessible narration segment navigation and progress indicator.
+- [x] Test paused seeking, stale callback protection, progress and boundary behavior with mocked speech.
+- [ ] Verify actual Chromium interaction and narrow screen layout, release upgrade and deployment, Android and real audio quality.

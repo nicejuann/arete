@@ -191,3 +191,6 @@ RC31 fixes an acceptance-test mismatch: a fresh reader defaults to John 1, where
 
 ## v2.0 RC32 — direct Scripture reference navigation
 The validated offline WEB Protestant pack was published in commit 4a8ba36e98a2e9a5d454a175a3ee0d15e4d166eb. RC32 adds direct reference navigation by full book name, canonical source code, or selected common abbreviations, with optional verse or verse-range highlighting, Enter-key support and offline reading through the existing pack. Invalid chapter/range input is rejected; manual navigation clears highlighting. Tests cover all 66 book names, bounds, and offline John 3:16 and 1 John 4:7–8. Existing article content and saved preference keys unchanged. RC32 browser acceptance and physical Android testing remain pending.
+
+## v2.0 RC33 — narration segment navigation
+RC33 adds previous/next narration segment controls, a completed-segment progress indicator and responsive controls for 320px screens. Seeking while paused does not resume speech; seeking during playback cancels the previous utterance and ignores stale callbacks. First and final segments are bounded. Added mocked speech regression and real Chromium interaction assertions, including narrow layout. Existing article data and storage keys are unchanged. Actual device voices, browser CI, deployment and Android testing remain unverified.
