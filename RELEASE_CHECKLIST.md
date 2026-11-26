@@ -1,9 +1,9 @@
-# ARETÉ v2.0 RC6 acceptance checklist
+# ARETÉ v2.0 RC7 acceptance checklist
 
 This is a release candidate, not a claim of production readiness.
 
 ## Android / installed app
-- [ ] Open app and verify version 2.0-rc6.
+- [ ] Open app and verify version 2.0-rc7.
 - [ ] Read and save an article, add a note, mark it read, close and reopen.
 - [ ] Change favorites, theme, text size and feed layout; restart and confirm persistence.
 - [ ] Search by topic and accented name, open a result and return.
@@ -35,7 +35,7 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 
 ## RC4 editorial progress
 - [x] First ten source-aligned article revisions, with dated scope and preserved IDs.
-- [ ] Review remaining 146 articles, including source suitability and factual claims.
+- [ ] Review remaining 136 articles, including source suitability and factual claims.
 - [ ] Independently verify revised articles and actual media links.
 
 ## RC5 editorial progress
@@ -45,3 +45,7 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 ## RC6 editorial progress
 - [x] Third ten source-aligned article revisions, with dated scope and preserved IDs.
 - [ ] Independently verify revised material and archival image delivery.
+
+## RC7 editorial progress
+- [x] Fourth ten source-aligned article revisions, with dated scope and preserved IDs.
+- [ ] Independently verify revised material and external links.
