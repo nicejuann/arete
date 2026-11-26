@@ -93,3 +93,6 @@ body.light .daily-edition{background:linear-gradient(145deg,#e4ecdf,#d5e1d1);bor
 
 /* RC22 guided reading */
 .guide-resume{width:100%;margin:0 0 14px;min-height:48px}.guide-detail .guide-entry small{line-height:1.5}.guide-detail .book-progress{height:5px}
+
+/* RC23: optional repeatable checks */
+.quiz-retry{font-size:13px;min-height:44px;margin-top:8px}.quiz-answer{line-height:1.6}

@@ -59,6 +59,10 @@ function zipStored(entries){
     await page.locator('[data-act="focus"][data-focus="quiz"]').click();
     await page.locator('.quiz-option').first().click();
     await page.locator('.quiz-answer').first().waitFor();
+    const answeredId=await page.locator('.quiz-answer').first().locator('xpath=ancestor::article').getAttribute('id');
+    assert.ok(await page.evaluate(id=>Object.hasOwn(JSON.parse(localStorage.getItem('arete-quiz-answers')),id.slice(5)),answeredId));
+    await page.locator('.quiz-retry').first().click();
+    assert.ok(await page.evaluate(id=>!Object.hasOwn(JSON.parse(localStorage.getItem('arete-quiz-answers')),id.slice(5)),answeredId));
     await page.locator('[data-tab="explore"]').click();
     await page.locator('#search').fill('moon');
     await page.locator('[data-act="search-open"]').first().click();
@@ -134,7 +138,7 @@ function zipStored(entries){
     await page.locator('.discovery-hub').waitFor();
     assert.equal(await page.locator('#connection-status').innerText(),'Offline');
     await page.locator('[data-act="focus"][data-focus="new"]').click();
-    assert.ok(await page.locator('#post-190').count()>0);
+    assert.ok(await page.locator('#post-200').count()>0);
     await page.locator('[data-act="focus"][data-focus="original"]').click();
     await page.locator('article.editorial').first().waitFor();
     await page.locator('[data-tab="library"]').click();

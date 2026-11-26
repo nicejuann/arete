@@ -1,9 +1,9 @@
-# ARETÉ v2.0 RC22 acceptance checklist
+# ARETÉ v2.0 RC23 acceptance checklist
 
 This is a release candidate, not a claim of production readiness.
 
 ## Android / installed app
-- [ ] Open app and verify version 2.0-rc22.
+- [ ] Open app and verify version 2.0-rc23.
 - [ ] Read and save an article, add a note, mark it read, close and reopen.
 - [ ] Change favorites, theme, text size and feed layout; restart and confirm persistence.
 - [ ] Search by topic and accented name, open a result and return.
@@ -128,3 +128,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Six new originals and quizzes; three new learning paths and continuation controls.
 - [x] Syntax, content integrity and simulated guide progress checks.
 - [ ] Confirm CI, deployment and physical Android experience; independently verify claims and media.
+
+## RC23 acceptance
+- [x] 200 originals and 72 quizzes; previous content preserved.
+- [x] Local quiz answer persistence, explicit retry and validated optional backup field.
+- [ ] Verify CI, deployment, physical Android acceptance and independent factual review.
