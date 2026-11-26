@@ -72,7 +72,18 @@ def collect():
                     break
         except Exception as exc:
             print("Theme unavailable",theme,str(exc)[:120])
+    if not fresh and not merged:
+        for pid in (45434,436535,11417,436524,436532,436105):
+            try:
+                p=normalize(get_json("/objects/"+str(pid)))
+                if p:
+                    fresh.append(p)
+                    merged[p["id"]]=p
+            except Exception as exc:
+                print("Bootstrap object unavailable",pid,str(exc)[:120])
     if not fresh:
+        if not merged:
+            raise SystemExit("No qualifying artworks obtained; initial import unsuccessful.")
         print("No new qualifying artworks; previous collection retained")
         return
     items=sorted(merged.values(),key=lambda p:(p["retrieved"],p["id"]),reverse=True)[:120]

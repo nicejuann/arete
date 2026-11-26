@@ -62,3 +62,6 @@ Focused collection navigation, unread-only toggle, unified search across four co
 
 ## v1.0 RC2 — stability fixes
 Unread items now disappear immediately when marked read; restored hidden posts refresh the view; search ranks title matches first and updates as imported collections load; browser history resets reader state when leaving Library. Added real Chromium mobile-viewport smoke tests (navigation, bookmark persistence, unread filtering, quizzes, search, reading size, local TXT import and offline reload) to the existing quality workflow. The first CI browser run and link audit still require verification; no claim of actual Android-device testing. Gallery import remained empty at the time of preparation. No paid services added.
+
+## v1.0 RC3 — collection resilience
+Gallery falls back to existing curated CC0 artwork records when no automated records are loaded, labeled separately. The gallery collector tries known object IDs when its initial search fails and reports failure if no initial records can be obtained. Open-reading pagination permits access beyond eight excerpts. Profile displays local collection counts, timestamps, and a combined refresh; collections also refresh on reconnect. CI and first automated gallery import still require verification. No paid services added.
