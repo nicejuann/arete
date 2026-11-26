@@ -90,6 +90,16 @@ function zipStored(entries){
     await page.locator('#book-file').setInputFiles({name:'test-book.txt',mimeType:'text/plain',buffer:Buffer.from('A sample personal book.\n\nSecond paragraph.')});
     await page.locator('.book-text').waitFor();
     assert.match(await page.locator('.book-text').innerText(),/sample personal book/);
+    await page.locator('#book-search').fill('Second paragraph');
+    await page.locator('.book-hit').first().click();
+    assert.match(await page.locator('.book-text').innerText(),/Second paragraph/);
+    await page.locator('[data-act="book-close"]').click();
+    await page.locator('.human-track').first().waitFor();
+    assert.equal(await page.locator('#human-player').count(),0);
+    await page.locator('.human-track button').first().click();
+    await page.locator('#human-player').waitFor({state:'attached'});
+    await page.locator('[data-act="human-close"]').click();
+    assert.equal(await page.locator('#human-player').count(),0);
     // Import a tiny standards-shaped EPUB using a test-only file.
     await page.locator('[data-tab="discover"]').click();
     await page.locator('[data-tab="library"]').click();
