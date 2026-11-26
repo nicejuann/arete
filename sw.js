@@ -1,5 +1,5 @@
-const CACHE='arete-v2.0-rc16';
-const FILES=['./','./index.html','./style.css?v=2.0-rc16','./app.js?v=2.0-rc16','./content.js?v=2.0-rc16','./fresh.json','./open-reading.json','./gallery.json','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
+const CACHE='arete-v2.0-rc17';
+const FILES=['./','./index.html','./style.css?v=2.0-rc17','./app.js?v=2.0-rc17','./content.js?v=2.0-rc17','./fresh.json','./open-reading.json','./gallery.json','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(FILES.map(path=>new Request(new URL(path,self.registration.scope),{cache:'reload'})));await self.skipWaiting()})()));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k.startsWith('arete-')&&k!==CACHE).map(k=>caches.delete(k)));await self.clients.claim()})()));
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET'||new URL(r.url).origin!==self.location.origin||!r.url.startsWith(self.registration.scope))return;
