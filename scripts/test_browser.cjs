@@ -19,6 +19,7 @@ function zipStored(entries){
   const browser=await chromium.launch({headless:true});
   try{
     const context=await browser.newContext({viewport:{width:393,height:873},isMobile:true,hasTouch:true,deviceScaleFactor:2});
+    await context.addInitScript(()=>{const spoken=[];Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{getVoices:()=>[],cancel(){},speak(u){spoken.push(u.text)}}});window.SpeechSynthesisUtterance=class{constructor(text){this.text=text}};window.__areteSpoken=spoken});
     const page=await context.newPage();
     const errors=[];
     page.on('pageerror',e=>errors.push(e.message));
@@ -44,8 +45,17 @@ function zipStored(entries){
     const first=page.locator('article.editorial').first();
     const id=await first.getAttribute('id');
     assert.ok(id);
+    await first.locator('[data-act="listen"]').click();
+    await page.locator('#narration-dock').waitFor({state:'visible'});
+    await page.locator('#narration-dock [data-act="narration-toggle"]').click();
+    assert.match(await page.locator('#narration-dock').innerText(),/PAUSED/);
+    await page.locator('#narration-dock [data-act="narration-toggle"]').click();
+    assert.match(await page.locator('#narration-dock').innerText(),/NOW READING/);
+    assert.ok(await page.evaluate(()=>window.__areteSpoken.length>=2&&window.__areteSpoken[0]===window.__areteSpoken[1]));
     await first.locator('[data-act="save"]').click();
-    await page.locator('[data-tab="saved"]').click();
+    await page.locator('#nav [data-tab="saved"]').click();
+    await page.locator('#narration-dock [data-act="narration-stop"]').click();
+    assert.equal(await page.locator('#narration-dock').isVisible(),false);
     assert.equal(await page.locator('#'+id).count(),1);
     await page.reload();
     await page.locator('#'+id).waitFor();
@@ -133,7 +143,7 @@ function zipStored(entries){
     await page.locator('[data-tab="discover"]').click();
     await page.evaluate(async()=>{await navigator.serviceWorker.ready});
     await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
-    assert.ok(await page.evaluate(async()=>{const cache=await caches.open('arete-v2.0-rc29');const html=await cache.match(new URL('index.html',location.href));return html&&(await html.text()).includes('data-build="2.0-rc29"')}));
+    assert.ok(await page.evaluate(async()=>{const cache=await caches.open('arete-v2.0-rc30');const html=await cache.match(new URL('index.html',location.href));return html&&(await html.text()).includes('data-build="2.0-rc30"')}));
     assert.equal(await page.locator('#app-update').isVisible(),false);
     await context.setOffline(true);
     await page.reload({waitUntil:'domcontentloaded'});
