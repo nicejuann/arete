@@ -82,6 +82,8 @@ function zipStored(entries){
     await page.locator('[data-act="guide-read"]').first().click();
     await page.locator('article.editorial').waitFor();
     await page.locator('[data-tab="profile"]').click();
+    await page.locator('#voice-rate').selectOption('1.15');
+    assert.equal(await page.evaluate(()=>localStorage.getItem('arete-voice-rate')),'1.15');
     await page.locator('#reading-size').selectOption('large');
     assert.ok(await page.locator('body').evaluate(e=>e.classList.contains('large-reading')));
     await page.locator('[data-tab="library"]').click();

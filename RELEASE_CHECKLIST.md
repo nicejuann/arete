@@ -1,9 +1,9 @@
-# ARETÉ v2.0 RC18 acceptance checklist
+# ARETÉ v2.0 RC19 acceptance checklist
 
 This is a release candidate, not a claim of production readiness.
 
 ## Android / installed app
-- [ ] Open app and verify version 2.0-rc18.
+- [ ] Open app and verify version 2.0-rc19.
 - [ ] Read and save an article, add a note, mark it read, close and reopen.
 - [ ] Change favorites, theme, text size and feed layout; restart and confirm persistence.
 - [ ] Search by topic and accented name, open a result and return.
@@ -108,3 +108,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Six new inline explainers and dedicated visual collection; source text preserved.
 - [x] Simulated visual filtering, topic restrictions, backup compatibility and media labels.
 - [ ] Confirm RC18 automated browser checks and Pages deployment; evaluate physical phone display and external media.
+
+## RC19 acceptance
+- [x] Daily ranking considers explicit preferences, unread status and topic diversity.
+- [x] Mocked speech lifecycle, pause/resume, stale callback and backup validation passed.
+- [ ] Confirm actual browser workflow and deployment, then test Android voice quality and controls with real audio.
