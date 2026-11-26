@@ -36,3 +36,6 @@ body.light{--bg:#f4f1e9;--surface:#fffdf9;--surface2:#f1eee5;--text:#202b25;--mu
 
 /* v1.1 */
 .discovery-hub{grid-template-columns:repeat(3,minmax(0,1fr))}.discovery-hub button[data-focus=new]{font-weight:650}.editorial.has-photo .photo img{min-height:120px;max-height:420px}@media(min-width:600px){.discovery-hub{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* v1.2 offline Scripture and book import */
+.pack-controls{margin:14px 0;padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--surface2)}.pack-controls strong{font-size:14px}.pack-controls p{line-height:1.6}.pack-controls a{font-size:12px}.pack-controls button{min-height:44px}
