@@ -29,3 +29,6 @@ JavaScript syntax checks passed for app, content and service worker. Chromium mo
 
 ## v0.2 changes
 All 50 starter articles expanded with original examples; full content visible directly in feed. Existing IDs and local storage schema retained. Improved typography, concept panels, four original educational diagrams, selected links to human narration and educational videos, and device voice selection. Media requires internet. This remains a prototype; a comprehensive factual/licensing audit, photographic library, automated content ingestion, native audio quality and Android regression testing remain pending. The original testing status below applies only to v0.1.
+
+## v0.2.1 update delivery
+Visible version label, versioned static assets, navigation network-first with offline fallback, service-worker update checks on foreground. No storage schema changes. Android update and deployment verification pending.
