@@ -1,5 +1,5 @@
 // ARETÉ: a version-matched offline shell, activated only when ready.
-const VERSION='2.0-rc42';
+const VERSION='2.0-rc43';
 const CACHE='arete-v'+VERSION;
 const SHELL=['./index.html','./style.css?v='+VERSION,'./app.js?v='+VERSION,'./content.js?v='+VERSION];
 const COLLECTIONS=['./fresh.json','./open-reading.json','./gallery.json'];
