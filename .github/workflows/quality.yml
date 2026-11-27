@@ -15,6 +15,7 @@ on:
       - 'scripts/build_bible.py'
       - 'scripts/audit_links.py'
       - 'scripts/source_inventory.cjs'
+      - 'scripts/editorial_audit.cjs'
       - '.github/workflows/quality.yml'
   workflow_dispatch:
   schedule:
@@ -43,7 +44,7 @@ jobs:
           node scripts/test_browser.cjs
       - name: Upgrade from exact preceding release
         run: |
-          git fetch --no-tags --depth=1 origin 641aaae8dc2a7df14e72a83be44c67a3570a6a7b
+          git fetch --no-tags --depth=1 origin d61bb20bda47632f8ecbeaaf7705254292effd08
           node scripts/test_upgrade.cjs
   link-audit:
     runs-on: ubuntu-latest
@@ -51,6 +52,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: node scripts/source_inventory.cjs
+      - run: node scripts/editorial_audit.cjs --self-test
+      - run: node scripts/editorial_audit.cjs
       - run: python3 scripts/audit_links.py --self-test
       - run: python3 scripts/audit_links.py --all
       - uses: actions/upload-artifact@v4
@@ -62,4 +65,5 @@ jobs:
             link-diagnostics.csv
             source-inventory.json
             editorial-review.csv
+            editorial-audit.json
           retention-days: 7
