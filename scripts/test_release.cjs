@@ -61,15 +61,15 @@ const rc23=vm.runInContext("(function(){const p=CONTENT.find(x=>x.id===200);cons
   const makeCache=()=>({entries:new Map(),async put(k,v){this.entries.set(typeof k==='string'?k:k.url,v)},async match(k){return this.entries.get(typeof k==='string'?k:k.url)},async addAll(requests){for(const r of requests)await this.put(r,new Response('fixture'))}});
   const cacheApi={async open(k){if(!stores.has(k))stores.set(k,makeCache());return stores.get(k)},async keys(){return [...stores.keys()]},async delete(k){return stores.delete(k)}};
   const self={registration:{scope},location:{origin:'https://example.test'},clients:{async claim(){claimed++}},async skipWaiting(){skips++},addEventListener(k,fn){handlers[k]=fn}};
-  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc48')+'"':'/* ARETE_BUILD:2.0-rc48 */')};
+  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc49')+'"':'/* ARETE_BUILD:2.0-rc49 */')};
   const swContext=vm.createContext({self,caches:cacheApi,fetch:mockFetch,Request,Response,URL,console});
   vm.runInContext(fs.readFileSync('sw.js','utf8'),swContext);
   function event(name,extra={}){let promise;handlers[name]({...extra,waitUntil:p=>promise=p,respondWith:p=>promise=p});return promise}
-  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc48'));
-  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc48');assert.equal(installed.entries.size,11);
+  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc49'));
+  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc49');assert.equal(installed.entries.size,11);
   const old=await cacheApi.open('arete-v2.0-rc29');await old.put(scope+'app.js?v=2.0-rc29',new Response('old app'));await cacheApi.open('arete-v2.0-rc28');
   await event('activate');assert.equal(claimed,1);assert.ok(stores.has('arete-v2.0-rc29')&&!stores.has('arete-v2.0-rc28'));
-  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc48'));
+  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc49'));
   const cached=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc29',method:'GET',mode:'cors'}});assert.equal(await cached.text(),'old app');
   const missing=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc99',method:'GET',mode:'cors'}});assert.equal(missing.type,'error');assert.equal(network,calls);
   await event('message',{data:{type:'ARETE_ACTIVATE_UPDATE'}});assert.equal(skips,1);
@@ -118,4 +118,6 @@ const rc46=vm.runInContext("(function(){const ids=[64,67,71,72,79,82,96,110,115,
 
 const rc47=vm.runInContext("(function(){const ids=[63,68,73,75,78,81,83,88,94,108,116,117,118,120,121,127,139,143,145,151];return {all:ids.every(id=>isExtended(CONTENT.find(p=>p.id===id))),total:CONTENT.filter(isExtended).length>=67,count:CONTENT.length===208,quizzes:CONTENT.filter(p=>p.quiz).length===80,scope:ids.every(id=>CONTENT.find(p=>p.id===id).editorialReview.scope.includes('New passages are editorial interpretation'))}})()",context);assert.ok(Object.values(rc47).every(Boolean),JSON.stringify(rc47));console.log(JSON.stringify(rc47));
 
-const rc48=vm.runInContext("(function(){const ids=[54,60,62,77,80,84,85,89,90,97,99,100,102,105,113,122,128,135,149,155,158,159,162,171,177,178,179,180,182,184,191,192,197];return {all:ids.every(id=>isExtended(CONTENT.find(p=>p.id===id))),total:CONTENT.filter(isExtended).length===100,count:CONTENT.length===208,quizzes:CONTENT.filter(p=>p.quiz).length===80,scope:ids.every(id=>CONTENT.find(p=>p.id===id).editorialReview.scope.includes('New passages are editorial interpretation'))}})()",context);assert.ok(Object.values(rc48).every(Boolean),JSON.stringify(rc48));console.log(JSON.stringify(rc48));
+const rc48=vm.runInContext("(function(){const ids=[54,60,62,77,80,84,85,89,90,97,99,100,102,105,113,122,128,135,149,155,158,159,162,171,177,178,179,180,182,184,191,192,197];return {all:ids.every(id=>isExtended(CONTENT.find(p=>p.id===id))),total:CONTENT.filter(isExtended).length>=100,count:CONTENT.length===208,quizzes:CONTENT.filter(p=>p.quiz).length===80,scope:ids.every(id=>CONTENT.find(p=>p.id===id).editorialReview.scope.includes('New passages are editorial interpretation'))}})()",context);assert.ok(Object.values(rc48).every(Boolean),JSON.stringify(rc48));console.log(JSON.stringify(rc48));
+
+const rc49=vm.runInContext("(function(){const ids=[61,69,70,74,76,91,92,95,98,107,109,111,112,114];return {all:ids.every(id=>isExtended(CONTENT.find(p=>p.id===id))),total:CONTENT.filter(isExtended).length===114,count:CONTENT.length===208,quizzes:CONTENT.filter(p=>p.quiz).length===80,scope:ids.every(id=>CONTENT.find(p=>p.id===id).editorialReview.scope.includes('New passages are editorial interpretation'))}})()",context);assert.ok(Object.values(rc49).every(Boolean),JSON.stringify(rc49));console.log(JSON.stringify(rc49));
