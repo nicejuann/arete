@@ -58,6 +58,8 @@ jobs:
           name: link-audit
           path: |
             link-audit.json
+            link-diagnostics.json
+            link-diagnostics.csv
             source-inventory.json
             editorial-review.csv
           retention-days: 7
