@@ -1,4 +1,4 @@
-/* ARETE_BUILD:2.0-rc51 */
+/* ARETE_BUILD:2.0-rc52 */
 'use strict';
 const $=s=>document.querySelector(s), cats=[...new Set(CONTENT.map(p=>p.category))];
 const defaults={saved:[],read:[],hidden:[],weights:{},disabled:['Faith'],theme:'dark',notes:{},seen:[],opens:0};
