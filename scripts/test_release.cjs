@@ -61,15 +61,15 @@ const rc23=vm.runInContext("(function(){const p=CONTENT.find(x=>x.id===200);cons
   const makeCache=()=>({entries:new Map(),async put(k,v){this.entries.set(typeof k==='string'?k:k.url,v)},async match(k){return this.entries.get(typeof k==='string'?k:k.url)},async addAll(requests){for(const r of requests)await this.put(r,new Response('fixture'))}});
   const cacheApi={async open(k){if(!stores.has(k))stores.set(k,makeCache());return stores.get(k)},async keys(){return [...stores.keys()]},async delete(k){return stores.delete(k)}};
   const self={registration:{scope},location:{origin:'https://example.test'},clients:{async claim(){claimed++}},async skipWaiting(){skips++},addEventListener(k,fn){handlers[k]=fn}};
-  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc52')+'"':'/* ARETE_BUILD:2.0-rc52 */')};
+  const mockFetch=async req=>{network++;const u=typeof req==='string'?req:req.url;return new Response(u.endsWith('index.html')?'data-build="'+(wrong?'old':'2.0-rc53')+'"':'/* ARETE_BUILD:2.0-rc53 */')};
   const swContext=vm.createContext({self,caches:cacheApi,fetch:mockFetch,Request,Response,URL,console});
   vm.runInContext(fs.readFileSync('sw.js','utf8'),swContext);
   function event(name,extra={}){let promise;handlers[name]({...extra,waitUntil:p=>promise=p,respondWith:p=>promise=p});return promise}
-  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc52'));
-  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc52');assert.equal(installed.entries.size,11);
+  wrong=true;await assert.rejects(event('install'));assert.ok(!stores.has('arete-v2.0-rc53'));
+  wrong=false;await event('install');assert.equal(skips,0);const installed=await cacheApi.open('arete-v2.0-rc53');assert.equal(installed.entries.size,11);
   const old=await cacheApi.open('arete-v2.0-rc29');await old.put(scope+'app.js?v=2.0-rc29',new Response('old app'));await cacheApi.open('arete-v2.0-rc28');
   await event('activate');assert.equal(claimed,1);assert.ok(stores.has('arete-v2.0-rc29')&&!stores.has('arete-v2.0-rc28'));
-  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc52'));
+  const calls=network;const nav=await event('fetch',{request:{url:scope,method:'GET',mode:'navigate'}});assert.ok((await nav.text()).includes('2.0-rc53'));
   const cached=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc29',method:'GET',mode:'cors'}});assert.equal(await cached.text(),'old app');
   const missing=await event('fetch',{request:{url:scope+'app.js?v=2.0-rc99',method:'GET',mode:'cors'}});assert.equal(missing.type,'error');assert.equal(network,calls);
   await event('message',{data:{type:'ARETE_ACTIVATE_UPDATE'}});assert.equal(skips,1);
@@ -126,4 +126,6 @@ const rc50=vm.runInContext("(function(){const ids=[51,52,53,55,56,57,58,59,86,87
 
 const rc51=vm.runInContext("(function(){const ids=[142,146,147,148,150,152,154,160,161,163,165,166,167,168,175,176,190,193,194,195,196,198,199,200];return {all:ids.every(id=>isExtended(CONTENT.find(p=>p.id===id))),total:CONTENT.filter(isExtended).length>=155,count:CONTENT.length===208,quizzes:CONTENT.filter(p=>p.quiz).length===80,scope:ids.every(id=>CONTENT.find(p=>p.id===id).editorialReview.scope.includes('New passages are editorial interpretation'))}})()",context);assert.ok(Object.values(rc51).every(Boolean),JSON.stringify(rc51));console.log(JSON.stringify(rc51));
 
-const rc52=vm.runInContext("(function(){const ids=[1,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,21,22,24,25,26,27,28,29,30];return {all:ids.every(id=>isExtended(CONTENT.find(p=>p.id===id))),total:CONTENT.filter(isExtended).length===181,count:CONTENT.length===208,quizzes:CONTENT.filter(p=>p.quiz).length===80,scope:ids.every(id=>CONTENT.find(p=>p.id===id).editorialReview.scope.includes('New passages are editorial interpretation'))}})()",context);assert.ok(Object.values(rc52).every(Boolean),JSON.stringify(rc52));console.log(JSON.stringify(rc52));
+const rc52=vm.runInContext("(function(){const ids=[1,3,4,5,6,7,9,10,11,12,13,14,16,17,18,19,20,21,22,24,25,26,27,28,29,30];return {all:ids.every(id=>isExtended(CONTENT.find(p=>p.id===id))),total:CONTENT.filter(isExtended).length>=181,count:CONTENT.length===208,quizzes:CONTENT.filter(p=>p.quiz).length===80,scope:ids.every(id=>CONTENT.find(p=>p.id===id).editorialReview.scope.includes('New passages are editorial interpretation'))}})()",context);assert.ok(Object.values(rc52).every(Boolean),JSON.stringify(rc52));console.log(JSON.stringify(rc52));
+
+const rc53=vm.runInContext("(function(){const ids=[31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,136,137,138,164,169,170,172];return {all:ids.every(id=>isExtended(CONTENT.find(p=>p.id===id))),total:CONTENT.filter(isExtended).length===208,count:CONTENT.length===208,unique:new Set(CONTENT.map(p=>p.id)).size===208,quizzes:CONTENT.filter(p=>p.quiz).length===80,scope:ids.every(id=>CONTENT.find(p=>p.id===id).editorialReview.scope.includes('New passages are editorial interpretation'))}})()",context);assert.ok(Object.values(rc53).every(Boolean),JSON.stringify(rc53));console.log(JSON.stringify(rc53));
