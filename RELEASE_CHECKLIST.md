@@ -213,3 +213,6 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 
 ## RC38 regression maintenance
 Corrected stale guide-count expectation from 8 to 10. Executed the complete JavaScript release test script using an isolated V8 harness with compatible mocked VM, filesystem, URL and Fetch interfaces; 75 assertions across 32 reported groups passed. This is not native Node or Chromium CI, nor physical-device or deployment verification. No application files or content changed.
+
+## RC38 browser acceptance repair
+Actual GitHub Actions run 45916405821: native Node regression and Python Bible builder self-test passed; link audit passed (200 of 294 eligible URLs checked: 175 reachable, 0 confirmed unavailable, 25 unverified); Chromium reached line 191 before failing because the test still expected RC30 cache and HTML markers. The browser test now derives the expected build from the checked-out HTML and confirms cache existence without creating it. Offline checks verify the exact build and latest permitted article dynamically. Upgrade test was skipped in that run. Pages deployment succeeded in run 45916404927. Fresh browser/upgrade results remain required; no app or article changes in this maintenance commit.

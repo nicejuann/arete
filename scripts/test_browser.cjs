@@ -1,6 +1,9 @@
 // Real Chromium mobile viewport smoke test; no external sources needed.
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const expectedBuild=fs.readFileSync('index.html','utf8').match(/data-build="(2\.0-rc\d+)"/)?.[1];
+assert.ok(expectedBuild,'Expected build marker missing');
 // Stored ZIP with correct CRC-32, local headers and central directory.
 function zipStored(entries){
   const locals=[],central=[];let offset=0;
@@ -188,14 +191,17 @@ function zipStored(entries){
     await page.locator('[data-tab="discover"]').click();
     await page.evaluate(async()=>{await navigator.serviceWorker.ready});
     await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
-    assert.ok(await page.evaluate(async()=>{const cache=await caches.open('arete-v2.0-rc30');const html=await cache.match(new URL('index.html',location.href));return html&&(await html.text()).includes('data-build="2.0-rc30"')}));
+    assert.equal(await page.locator('html').getAttribute('data-build'),expectedBuild);
+    assert.ok(await page.evaluate(async build=>{const key='arete-v'+build;if(!(await caches.keys()).includes(key))return false;const cache=await caches.open(key);const html=await cache.match(new URL('index.html',location.href));return !!html&&(await html.text()).includes('data-build="'+build+'"')},expectedBuild),'Current version-matched offline shell missing');
     assert.equal(await page.locator('#app-update').isVisible(),false);
     await context.setOffline(true);
     await page.reload({waitUntil:'domcontentloaded'});
     await page.locator('.discovery-hub').waitFor();
+    assert.equal(await page.locator('html').getAttribute('data-build'),expectedBuild);
     assert.equal(await page.locator('#connection-status').innerText(),'Offline');
     await page.locator('[data-act="focus"][data-focus="new"]').click();
-    assert.ok(await page.locator('#post-200').count()>0);
+    const latestId=await page.evaluate(()=>Math.max(...CONTENT.filter(allowed).map(p=>p.id)));
+    assert.ok(await page.locator('#post-'+latestId).count()>0,'Latest permitted article missing offline');
     await page.locator('[data-act="focus"][data-focus="original"]').click();
     await page.locator('article.editorial').first().waitFor();
     await page.locator('[data-tab="library"]').click();
