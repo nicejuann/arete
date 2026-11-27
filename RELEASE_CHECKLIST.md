@@ -195,3 +195,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Implement weighted, word-aware discovery search and clear empty-result recovery.
 - [x] Test relevance, prefixes, accents, multi-word matching and false-positive rejection.
 - [ ] Confirm full Chromium search behavior, upgrade, deployment and physical device testing.
+
+## RC36 acceptance
+- [x] Add connected discoveries, reason labels and finite recommendations in focused reading.
+- [x] Test deterministic ranking, filtering, deduplication and recommendation bounds.
+- [ ] Confirm Chromium navigation, upgrade, deployment and actual relevance through editorial review.

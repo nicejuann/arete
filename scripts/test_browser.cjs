@@ -32,6 +32,13 @@ function zipStored(entries){
     assert.ok(leadId);
     await lead.click();
     await page.locator('#post-'+leadId).waitFor();
+    const related=page.locator('.connected-story').first();
+    await related.waitFor();
+    const relatedId=await related.getAttribute('data-id');
+    assert.notEqual(relatedId,leadId);
+    await related.click();
+    await page.locator('#post-'+relatedId).waitFor();
+    assert.equal(await page.locator('#post-'+leadId).count(),0);
     await page.locator('[data-act="focus-close"]').first().click();
     assert.equal(await page.locator('.edition-lead').getAttribute('data-id'),leadId);
     assert.equal(await page.locator('#nav svg').count(),5);
