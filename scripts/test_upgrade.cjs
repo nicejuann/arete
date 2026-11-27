@@ -4,8 +4,8 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const http=require('node:http');
 const {execFileSync}=require('node:child_process');
-const OLD_COMMIT='9a0c418063f72c9dfd28f0bc26b803e67f0ca2e5';
-const OLD='2.0-rc42',NEXT='2.0-rc43';
+const OLD_COMMIT='af70b827d32df232b861c0ca205b063703c8637a';
+const OLD='2.0-rc43',NEXT='2.0-rc44';
 const files=['index.html','style.css','app.js','content.js','sw.js','fresh.json','open-reading.json','gallery.json','manifest.webmanifest','icon.svg','icon-192.png','icon-512.png'];
 const old=new Map(files.map(p=>[p,execFileSync('git',['show',OLD_COMMIT+':'+p],{maxBuffer:20*1024*1024})]));
 const current=new Map(files.map(p=>[p,fs.readFileSync(p)]));
@@ -65,6 +65,6 @@ const server=http.createServer((req,res)=>{
     await page.locator('#'+post+' [data-act="expand"]').click();
     assert.equal(await page.locator('#'+post+' textarea').inputValue(),'Upgrade preservation fixture');
     assert.equal(errors.length,0,errors.join('\n'));
-    console.log('RC42 to RC43: actual prior release, waiting worker, explicit activation, old shell before activation, saved article/note/quiz preservation, previous cache and offline reload passed.');
+    console.log('RC43 to RC44: actual prior release, waiting worker, explicit activation, old shell before activation, saved article/note/quiz preservation, previous cache and offline reload passed.');
   }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exitCode=1}).finally(()=>server.close());
