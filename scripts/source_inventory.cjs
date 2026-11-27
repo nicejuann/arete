@@ -25,7 +25,7 @@ function buildInventory(){
   for(const m of fs.readFileSync('app.js','utf8').matchAll(/https:\/\/[^\s"'<>\\]+/g)){
     const url=m[0].replace(/[),;\]]+$/,'');
     if(/[$\{\}]/.test(url)||/\/$/.test(url)&&/bible-api\.com|cdn\.jsdelivr\.net/.test(url))continue;
-    if(/\.(mp3|ogg|m4a)(?:\?|$)/i.test(url))add(url,'audio file','','');
+    if(/\.(mp3|ogg|m4a)(?:\?|$)/i.test(url)&&!/^https:\/\/[^/]+\/wiki\/File:/i.test(url))add(url,'audio file','','');
     else if(!sources.has(url))add(url,'app resource','','');
   }
   const records=[...sources.values()].sort((a,b)=>a.url.localeCompare(b.url));
