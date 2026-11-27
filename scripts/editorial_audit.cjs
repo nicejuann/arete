@@ -45,6 +45,6 @@ if(process.argv.includes('--self-test')){
   const r=audit(posts);
   fs.writeFileSync('editorial-audit.json',JSON.stringify(r,null,2)+'\n');
   console.log(JSON.stringify({articles:r.articles,totalWords:r.totalWords,minWords:r.minWords,maxWords:r.maxWords,quizCount:r.quizCount,reflectionCount:r.reflectionCount,missingReflection:r.missingReflection.length,reviewMissing:r.reviewMissing.length,quizIssues:r.quizIssues.length,duplicateTitles:r.duplicateTitles.length,duplicatePrompts:r.duplicatePrompts.length,duplicateSentences:r.duplicateSentences.length,nearPairs:r.nearPairs.length,failures:r.failures.length}));
-  assert.equal(r.articles,208);assert.equal(r.quizCount,158);assert.equal(r.reflectionCount,208);assert.equal(r.missingReflection.length,0);
+  assert.equal(r.articles,208);assert.equal(r.quizCount,208);assert.equal(r.reflectionCount,208);assert.equal(r.missingReflection.length,0);
   for(const key of ['failures','reviewMissing','quizIssues','duplicateTitles','duplicatePrompts'])assert.equal(r[key].length,0,JSON.stringify(r[key]));
 }
