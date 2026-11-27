@@ -43,7 +43,7 @@ jobs:
           node scripts/test_browser.cjs
       - name: Upgrade from exact preceding release
         run: |
-          git fetch --no-tags --depth=1 origin af70b827d32df232b861c0ca205b063703c8637a
+          git fetch --no-tags --depth=1 origin 1bf40044ed6b2edb77eba8b440a2185a20c4eae1
           node scripts/test_upgrade.cjs
   link-audit:
     runs-on: ubuntu-latest
