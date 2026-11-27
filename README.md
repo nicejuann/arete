@@ -209,3 +209,6 @@ Four extended originals (IDs 201–204), each with a worked example, nuance, ref
 
 ## v2.0 RC38 — book-like focused reading
 Focused articles now use a borderless reading layout, responsive serif typography, clearer title and summary hierarchy, direct persistent text-size control, visible optional reflection and extended-reading labels for articles of at least 300 words. Author-provided paragraph breaks are preserved; long paragraphs are split at sentence boundaries without changing normalized text. Existing article records and preference keys remain unchanged. Added content-wide paragraph preservation and reader markup tests, plus browser font-size and narrow-layout assertions. Full visual/browser acceptance and physical Android verification remain pending.
+
+## RC38 regression maintenance
+Corrected stale guide-count expectation from 8 to 10. Executed the complete JavaScript release test script using an isolated V8 harness with compatible mocked VM, filesystem, URL and Fetch interfaces; 75 assertions across 32 reported groups passed. This is not native Node or Chromium CI, nor physical-device or deployment verification. No application files or content changed.

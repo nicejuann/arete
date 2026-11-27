@@ -210,3 +210,6 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Focused reader layout, direct size controls, visible reflection and depth labels.
 - [x] Verify all article text and explicit paragraph breaks preserved; validate JavaScript syntax.
 - [ ] Verify actual mobile rendering, font-size controls, theme contrast, upgrade and deployment in browser and Android.
+
+## RC38 regression maintenance
+Corrected stale guide-count expectation from 8 to 10. Executed the complete JavaScript release test script using an isolated V8 harness with compatible mocked VM, filesystem, URL and Fetch interfaces; 75 assertions across 32 reported groups passed. This is not native Node or Chromium CI, nor physical-device or deployment verification. No application files or content changed.
