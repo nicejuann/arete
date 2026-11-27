@@ -98,6 +98,11 @@ function zipStored(entries){
     await page.locator('.quiz-retry').first().click();
     assert.ok(await page.evaluate(id=>!Object.hasOwn(JSON.parse(localStorage.getItem('arete-quiz-answers')),id.slice(5)),answeredId));
     await page.locator('[data-tab="explore"]').click();
+    await page.locator('#search').fill('zzzzunlikelymatchzzzz');
+    await page.locator('.search-empty').waitFor();
+    await page.locator('[data-act="search-clear"]').click();
+    assert.equal(await page.locator('#search').inputValue(),'');
+    await page.locator('.guide-catalog').waitFor();
     await page.locator('#search').fill('moon');
     await page.locator('[data-act="search-open"]').first().click();
     await page.locator('[data-act="search-back"]').click();

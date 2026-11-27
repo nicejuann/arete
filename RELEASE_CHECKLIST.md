@@ -190,3 +190,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Implement per-article local narration progress, restart and completion clearing.
 - [x] Add content-version guards and backup integration; add simulated resume tests.
 - [ ] Confirm Chromium reload/resume, narrow dock layout, CI upgrade, deployment, physical Android and actual audio quality.
+
+## RC35 acceptance
+- [x] Implement weighted, word-aware discovery search and clear empty-result recovery.
+- [x] Test relevance, prefixes, accents, multi-word matching and false-positive rejection.
+- [ ] Confirm full Chromium search behavior, upgrade, deployment and physical device testing.

@@ -197,3 +197,6 @@ RC33 adds previous/next narration segment controls, a completed-segment progress
 
 ## v2.0 RC34 — resume interrupted narration
 RC34 saves the current narration segment per article on-device, offers Resume audio on article cards, adds a Restart control, and clears progress on natural completion. Content fingerprints prevent stale positions after article revisions. Positions are included in optional backup/restore; stale positions are discarded on restore. No autoplay, network service or change to existing article content. Added mocked speech regression and browser reload/resume assertions. Actual speech and mobile layout acceptance remain pending.
+
+## v2.0 RC35 — more relevant discovery search
+RC35 weights title, topic, summary and article text separately, promotes exact title and phrase matches, supports accent-insensitive word-prefix matching, and avoids internal substring false matches such as art in earth. All search terms must match; disabled topics and hidden originals remain excluded. Empty results offer a clear reset and all-collections option. No new content or network dependency. Added isolated relevance tests and Chromium empty-search recovery assertions. Full CI and device acceptance remain pending.
