@@ -200,3 +200,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Add connected discoveries, reason labels and finite recommendations in focused reading.
 - [x] Test deterministic ranking, filtering, deduplication and recommendation bounds.
 - [ ] Confirm Chromium navigation, upgrade, deployment and actual relevance through editorial review.
+
+## RC37 acceptance
+- [x] Four extended originals and two new curated paths; original 200 article records preserved.
+- [x] Verify sequential IDs, unique titles, minimum depth, quiz structure and numerical examples.
+- [ ] Confirm complete regression, browser acceptance, independent editorial verification and live deployment.

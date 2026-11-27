@@ -203,3 +203,6 @@ RC35 weights title, topic, summary and article text separately, promotes exact t
 
 ## v2.0 RC36 — connected discoveries
 RC36 adds up to three related article recommendations to focused reading, using existing editorial subject clusters, curated reading paths, shared title/summary words and same-topic fallback. Hidden articles and disabled topics are excluded; unread items receive a small preference. Recommendations include transparent connection labels and estimated reading time. The More menu's Related discoveries action now opens the related-story panel instead of generic category search. No autoplay, infinite recommendations, new network dependency or change to article content. Added regression across all 200 articles and browser navigation assertions. Full browser acceptance and deployment remain pending.
+
+## v2.0 RC37 — deeper original readings
+Four extended originals (IDs 201–204), each with a worked example, nuance, reflection, knowledge check and source link. Topics: electrical power and energy, real GDP per capita, conditional probability and sampling bias. Two new guided reading paths connect the additions with earlier articles. Prior 200 article records are unchanged. Totals: 204 originals and 76 quizzes. Source summaries retrieved from EIA and OpenStax; independent editorial verification and live link/browser checks remain pending.
