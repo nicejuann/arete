@@ -47,12 +47,12 @@ jobs:
           node scripts/test_upgrade.cjs
   link-audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - run: node scripts/source_inventory.cjs
       - run: python3 scripts/audit_links.py --self-test
-      - run: python3 scripts/audit_links.py
+      - run: python3 scripts/audit_links.py --all
       - uses: actions/upload-artifact@v4
         with:
           name: link-audit

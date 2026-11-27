@@ -72,11 +72,16 @@ def self_test():
     assert sum(r["refs"][0]["role"]=="headline" for r in first)>0
     assert {r["url"] for r in first}!={r["url"] for r in second}
     assert len(choose_records(rows[:3],10))==3
-    print("Audit sampling: coverage, unique links, rotation and small inventory passed")
-def main():
+    full=choose_records(rows,10,len(rows))
+    assert len(full)==len(rows) and {r['url'] for r in full}=={r['url'] for r in rows}
+    assert len({r['url'] for r in full})==len(full)
+    print("Audit sampling: coverage, unique links, rotation, small inventory and full coverage passed")
+def main(full=False):
     data=json.loads((ROOT/"source-inventory.json").read_text(encoding="utf-8"))
     records=[r for r in data["links"] if up.urlsplit(r["url"]).hostname not in {"raw.githubusercontent.com","github.com","bible-api.com"}]
-    chosen=choose_records(records,dt.date.today().toordinal()//7)
+    chosen=choose_records(records,dt.date.today().toordinal()//7,len(records) if full else 200)
+    if full and (len(chosen)!=len(records) or len({r['url'] for r in chosen})!=len(records)):
+        raise RuntimeError('Full audit did not cover every eligible unique URL')
     with cf.ThreadPoolExecutor(max_workers=8) as pool: items=list(pool.map(check,chosen))
     summary={k:sum(x["result"]==k for x in items) for k in ("reachable","unavailable","unverified")}
     (ROOT/"link-audit.json").write_text(json.dumps({"checked_at":dt.datetime.now(dt.timezone.utc).isoformat(),"eligible":len(records),"checked":len(items),"summary":summary,"links":items},indent=2)+"\n",encoding="utf-8")
@@ -84,4 +89,4 @@ def main():
 if __name__=="__main__":
     import sys
     if "--self-test" in sys.argv:self_test()
-    else:main()
+    else:main(full='--all' in sys.argv)
