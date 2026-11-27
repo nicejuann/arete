@@ -206,3 +206,6 @@ RC36 adds up to three related article recommendations to focused reading, using 
 
 ## v2.0 RC37 — deeper original readings
 Four extended originals (IDs 201–204), each with a worked example, nuance, reflection, knowledge check and source link. Topics: electrical power and energy, real GDP per capita, conditional probability and sampling bias. Two new guided reading paths connect the additions with earlier articles. Prior 200 article records are unchanged. Totals: 204 originals and 76 quizzes. Source summaries retrieved from EIA and OpenStax; independent editorial verification and live link/browser checks remain pending.
+
+## v2.0 RC38 — book-like focused reading
+Focused articles now use a borderless reading layout, responsive serif typography, clearer title and summary hierarchy, direct persistent text-size control, visible optional reflection and extended-reading labels for articles of at least 300 words. Author-provided paragraph breaks are preserved; long paragraphs are split at sentence boundaries without changing normalized text. Existing article records and preference keys remain unchanged. Added content-wide paragraph preservation and reader markup tests, plus browser font-size and narrow-layout assertions. Full visual/browser acceptance and physical Android verification remain pending.

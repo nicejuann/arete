@@ -32,6 +32,15 @@ function zipStored(entries){
     assert.ok(leadId);
     await lead.click();
     await page.locator('#post-'+leadId).waitFor();
+    await page.locator('#post-'+leadId+' h1').waitFor();
+    const initialSize=await page.locator('.reader-edition .article-body p').first().evaluate(e=>parseFloat(getComputedStyle(e).fontSize));
+    await page.locator('[data-act="focus-size"]').click();
+    assert.ok(await page.locator('.reader-edition .article-body p').first().evaluate(e=>parseFloat(getComputedStyle(e).fontSize))>initialSize);
+    assert.equal(await page.evaluate(()=>localStorage.getItem('arete-reading-size')),'large');
+    await page.setViewportSize({width:320,height:720});
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth+1),'focused reader narrow screen overflow');
+    await page.setViewportSize({width:393,height:873});
+    await page.locator('[data-act="focus-size"]').click();
     const related=page.locator('.connected-story').first();
     await related.waitFor();
     const relatedId=await related.getAttribute('data-id');

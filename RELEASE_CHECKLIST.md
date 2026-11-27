@@ -205,3 +205,8 @@ Existing content counts at RC3 preparation: 176 originals, 48 quizzes, 20 photog
 - [x] Four extended originals and two new curated paths; original 200 article records preserved.
 - [x] Verify sequential IDs, unique titles, minimum depth, quiz structure and numerical examples.
 - [ ] Confirm complete regression, browser acceptance, independent editorial verification and live deployment.
+
+## RC38 acceptance
+- [x] Focused reader layout, direct size controls, visible reflection and depth labels.
+- [x] Verify all article text and explicit paragraph breaks preserved; validate JavaScript syntax.
+- [ ] Verify actual mobile rendering, font-size controls, theme contrast, upgrade and deployment in browser and Android.
