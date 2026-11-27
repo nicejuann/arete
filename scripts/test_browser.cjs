@@ -60,6 +60,15 @@ function zipStored(entries){
     assert.ok(await page.locator('body').evaluate(e=>e.classList.contains('light')));
     await page.locator('#theme').click();
     await page.setViewportSize({width:393,height:873});
+    await page.locator('[data-act="focus"][data-focus="extended"]').click();
+    await page.locator('.extended-intro').waitFor();
+    assert.ok(await page.locator('article.compact-story').count()>0);
+    assert.ok(await page.evaluate(()=>Array.from(document.querySelectorAll('article.compact-story')).every(e=>isExtended(CONTENT.find(p=>p.id===Number(e.id.slice(5)))))));
+    assert.equal(await page.evaluate(()=>localStorage.getItem('arete-focus-view')),'extended');
+    await page.locator('article.compact-story [data-act="focus-article"]').first().click();
+    await page.locator('.reader-edition .depth-label').waitFor();
+    await page.locator('[data-act="focus-close"]').first().click();
+    await page.locator('.extended-intro').waitFor();
     await page.locator('[data-act="focus"][data-focus="original"]').click();
     const first=page.locator('article.editorial').first();
     const id=await first.getAttribute('id');
