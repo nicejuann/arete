@@ -1,6 +1,24 @@
 {
-  "updated": "2026-11-27T08:47:48.452015+00:00",
+  "updated": "2026-11-28T08:02:09.445262+00:00",
   "items": [
+    {
+      "title": "APOD: 2026 November 28 – Apollo 17 VIP Site Anaglyph",
+      "url": "https://science.nasa.gov/image-article/apod-2026-november-28-apollo-17-vip-site-anaglyph/",
+      "date": "2026-11-28",
+      "source": "NASA"
+    },
+    {
+      "title": "Artemis III Astronaut Andre Douglas Visits VAB",
+      "url": "https://www.nasa.gov/image-article/artemis-iii-astronaut-andre-douglas-visits-vab/",
+      "date": "2026-11-27",
+      "source": "NASA"
+    },
+    {
+      "title": "NASA’s NG-25 Mission to Launch Pioneering Space Crops Research",
+      "url": "https://science.nasa.gov/science-research/biological-physical-sciences/nasas-ng-25-mission-to-launch-pioneering-space-crops-research/",
+      "date": "2026-11-27",
+      "source": "NASA"
+    },
     {
       "title": "APOD: 2026 November 27 – The Moon Watchers",
       "url": "https://science.nasa.gov/image-article/apod-2026-november-27-the-moon-watchers/",
@@ -12,6 +30,12 @@
       "url": "https://science.nasa.gov/earth/earth-observatory/shivelyuch-socked-in/",
       "date": "2026-11-27",
       "source": "NASA"
+    },
+    {
+      "title": "New Online at the Library of Congress: November 2026",
+      "url": "https://blogs.loc.gov/thesignal/2026/11/new-loc-november-2026/",
+      "date": "2026-11-27",
+      "source": "Library of Congress"
     },
     {
       "title": "APOD: 2026 November 26 – Eye in the Sky: The Milky Way over Lençóis",
@@ -40,24 +64,6 @@
     {
       "title": "Childhood, Career Come Full Circle for Budget Analyst at NASA Goddard",
       "url": "https://www.nasa.gov/centers-and-facilities/goddard/childhood-career-come-full-circle-for-budget-analyst-at-nasa-goddard/",
-      "date": "2026-11-25",
-      "source": "NASA"
-    },
-    {
-      "title": "Eye of the Sahara",
-      "url": "https://www.nasa.gov/image-article/eye-of-the-sahara/",
-      "date": "2026-11-25",
-      "source": "NASA"
-    },
-    {
-      "title": "NASA’s Hubble Views Ocean of Stars in Groundwork for Roman",
-      "url": "https://science.nasa.gov/missions/hubble/nasas-hubble-views-ocean-of-stars-in-groundwork-for-roman/",
-      "date": "2026-11-25",
-      "source": "NASA"
-    },
-    {
-      "title": "APOD: 2026 November 25 – SPHEREx Seeing Through Dust",
-      "url": "https://science.nasa.gov/image-article/apod-2026-november-25-spherex-seeing-through-dust/",
       "date": "2026-11-25",
       "source": "NASA"
     },
@@ -293,12 +299,6 @@
       "title": "The Zine Atlas",
       "url": "https://blogs.loc.gov/thesignal/2026/10/the-zine-atlas/",
       "date": "2026-10-13",
-      "source": "Library of Congress"
-    },
-    {
-      "title": "Informing AI Strategy and Literacy: An Interview with Sylvia Staal Riordan",
-      "url": "https://blogs.loc.gov/thesignal/2026/10/interview-with-sylvia-staal-riordan/",
-      "date": "2026-10-08",
       "source": "Library of Congress"
     }
   ]
